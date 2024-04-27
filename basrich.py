@@ -31,8 +31,14 @@ class RichASTVisitor:
     def visit_number(self, node: Number, tree: Tree):
         tree.add(f"Number: {node.value}")
 
+    def visit_Restore(self, node: Restore, tree: Tree):
+        tree.add(f"Restore:")
+
     def visit_remark(self, node: Remark, tree: Tree):
         tree.add(f"Remark: {node.comment}")
+
+    def visit_input(self, node: Input, tree: Tree):
+        tree.add(f"Input: {node.ident}")
 
     def visit_for(self, node: For, tree: Tree):
       for_tree = tree.add("[#00008B]For")
@@ -102,14 +108,14 @@ class RichASTVisitor:
 
     def visit_read(self, node: Read, tree: Tree):
         read_tree = tree.add("[#00008B]Read")
-        for var in node.varlist:
+        for var in node.exprList:
             var_tree = read_tree.add("Variable")
             var.accept(self, var_tree)
 
     def visit_data(self, node: Data, tree: Tree):
         data_tree = tree.add("[#00008B]Data")
-        for num in node.numlist:
-            num_tree = data_tree.add("Number")
+        for num in node.plist:
+            num_tree = data_tree.add("Element")
             num.accept(self, num_tree)
 
     def visit_if(self, node: If, tree: Tree):
@@ -155,9 +161,10 @@ def print_ast_tree(node: Node, label: str = "AST") -> Tree:
         tree.add(child)
     elif isinstance(node, Remark):
         tree.add(Tree(f"Remark: {node.comment}"))
+    
     elif isinstance(node, Data):
         child = Tree("Data")
-        child.add(Tree(f"variable: {node.numlist}"))
+        child.add(Tree(f"PList: {node.plist}"))
         tree.add(child)
     elif isinstance(node, Variable):
         child = Tree("Variable")
@@ -166,6 +173,10 @@ def print_ast_tree(node: Node, label: str = "AST") -> Tree:
     elif isinstance(node, Number):
         child = Tree("Number")
         child.add(Tree(f"Number: {node.value}"))
+        tree.add(child)
+    elif isinstance(node, Input):
+        child = Tree("Input")
+        child.add(Tree(f"Elements: {node.ident}"))
         tree.add(child)
     elif isinstance(node, For):
         child = Tree("For")
@@ -176,6 +187,9 @@ def print_ast_tree(node: Node, label: str = "AST") -> Tree:
         tree.add(child)
     elif isinstance(node, End):
         child = Tree("End")
+        tree.add(child)
+    elif isinstance(node, Restore):
+        child = Tree("Restore")
         tree.add(child)
     elif isinstance(node, Literal):
         child = Tree("Literal")
@@ -221,7 +235,7 @@ def print_ast_tree(node: Node, label: str = "AST") -> Tree:
         tree.add(child)
     elif isinstance(node, Read):
         child = Tree("Read")
-        child.add(Tree(f"Varlist: {node.varlist}"))
+        child.add(Tree(f"exprList: {node.exprList}"))
         tree.add(child)
     elif isinstance(node, If):
         child = Tree("If")

@@ -37,8 +37,9 @@ class Lexer(sly.Lexer):
         self.lineno += 1
         return t
 
+
     @_("LET|let")
-    def LET(self, t):
+    def LET(self, t): 
         t.value = t.value.upper()
         return t
 
@@ -157,6 +158,16 @@ def pprint(source):
     from rich.table import Table
     from rich.console import Console
 
+    def procesar_archivo(source):
+        result = ""
+        for line in source.splitlines():
+            result += line +" "+"\n"
+        return result
+    
+
+    # Procesamos el archivo
+    source_processed = procesar_archivo(source)
+    print(source_processed)
     lex = Lexer()
 
     table = Table(title='Análisis Léxico')
@@ -164,7 +175,7 @@ def pprint(source):
     table.add_column('value')
     table.add_column('lineno', justify='right')
 
-    for tok in lex.tokenize(source):
+    for tok in lex.tokenize(source_processed):
         value = tok.value if isinstance(tok.value, str) else str(tok.value)
         table.add_row(tok.type, value, str(tok.lineno))
 

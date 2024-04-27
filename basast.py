@@ -61,7 +61,8 @@ class Logical(Expression):
     
 @dataclass
 class Function(Expression):
-    funcValue: Expression
+    funcType: String
+    exprList : List[Expression]
 
 @dataclass
 class Variable(Expression):
@@ -123,13 +124,13 @@ class Let(Statement):
 
 @dataclass
 class Read(Statement):
-    varlist : List[Expression]
+    exprList : List[Expression]
     def accept(self, visitor):
         return visitor.visit_Read(self)
 
 @dataclass
 class Data(Statement):
-    numlist : List[Expression]
+    plist : List[Number|String]
     def accept(self, visitor):
         return visitor.visit_Data(self)
 

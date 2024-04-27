@@ -7,130 +7,123 @@ Rule 3     _1_statement_repeat -> <empty>
 Rule 4     _1_statement_items -> _1_statement_items _1_statement_item
 Rule 5     _1_statement_items -> _1_statement_item
 Rule 6     _1_statement_item -> statement
-Rule 7     statement -> INTEGER command
-Rule 8     command -> DIM dimlist
-Rule 9     command -> RETURN
-Rule 10    command -> GOSUB INTEGER
-Rule 11    command -> DEF FN ( varlist ) = expr
-Rule 12    command -> INPUT IDENT
-Rule 13    command -> RESTORE
-Rule 14    command -> STOP
-Rule 15    command -> REM
-Rule 16    command -> END
-Rule 17    command -> NEXT IDENT
-Rule 18    command -> FOR IDENT = INTEGER TO expr optstep
-Rule 19    command -> IF relexpr THEN INTEGER
-Rule 20    command -> GOTO INTEGER
-Rule 21    command -> PRINT plist
-Rule 22    command -> DATA numlist
-Rule 23    command -> READ varlist
-Rule 24    command -> LET variable = expr
-Rule 25    expr -> - expr  [precedence=right, level=4]
-Rule 26    expr -> ( expr )
-Rule 27    expr -> FUNCTIONS ( funcValue )
-Rule 28    expr -> variable
-Rule 29    expr -> FLOAT
-Rule 30    expr -> INTEGER
-Rule 31    expr -> expr ^ expr  [precedence=left, level=3]
-Rule 32    expr -> expr / expr  [precedence=left, level=2]
-Rule 33    expr -> expr * expr  [precedence=left, level=2]
-Rule 34    expr -> expr - expr  [precedence=left, level=1]
-Rule 35    expr -> expr + expr  [precedence=left, level=1]
-Rule 36    relexpr -> expr NE expr
-Rule 37    relexpr -> expr = expr
-Rule 38    relexpr -> expr GE expr
-Rule 39    relexpr -> expr GT expr
-Rule 40    relexpr -> expr LE expr
-Rule 41    relexpr -> expr LT expr
-Rule 42    variable -> IDENT ( INTEGER , INTEGER )
-Rule 43    variable -> IDENT ( INTEGER )
-Rule 44    variable -> IDENT
-Rule 45    dimlist -> dimitem _2_0x2c_dimitem_repeat
-Rule 46    _2_0x2c_dimitem_repeat -> _2_0x2c_dimitem_items
-Rule 47    _2_0x2c_dimitem_repeat -> <empty>
-Rule 48    _2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item
-Rule 49    _2_0x2c_dimitem_items -> _2_0x2c_dimitem_item
-Rule 50    _2_0x2c_dimitem_item -> , dimitem
-Rule 51    dimitem -> IDENT ( size )
-Rule 52    size -> INTEGER _3_0x2c_INTEGER_repeat
-Rule 53    _3_0x2c_INTEGER_repeat -> _3_0x2c_INTEGER_items
-Rule 54    _3_0x2c_INTEGER_repeat -> <empty>
-Rule 55    _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item
-Rule 56    _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_item
-Rule 57    _3_0x2c_INTEGER_item -> , INTEGER
-Rule 58    varlist -> variable _4_0x2c_variable_repeat
-Rule 59    _4_0x2c_variable_repeat -> _4_0x2c_variable_items
-Rule 60    _4_0x2c_variable_repeat -> <empty>
-Rule 61    _4_0x2c_variable_items -> _4_0x2c_variable_items _4_0x2c_variable_item
-Rule 62    _4_0x2c_variable_items -> _4_0x2c_variable_item
-Rule 63    _4_0x2c_variable_item -> , variable
-Rule 64    numlist -> number _5_0x2c_number_repeat
-Rule 65    _5_0x2c_number_repeat -> _5_0x2c_number_items
-Rule 66    _5_0x2c_number_repeat -> <empty>
-Rule 67    _5_0x2c_number_items -> _5_0x2c_number_items _5_0x2c_number_item
-Rule 68    _5_0x2c_number_items -> _5_0x2c_number_item
-Rule 69    _5_0x2c_number_item -> , number
-Rule 70    number -> - FLOAT  [precedence=right, level=4]
-Rule 71    number -> - INTEGER  [precedence=right, level=4]
-Rule 72    number -> FLOAT
-Rule 73    number -> INTEGER
-Rule 74    funcValue -> variable
-Rule 75    funcValue -> FLOAT
-Rule 76    funcValue -> INTEGER
-Rule 77    plist -> pitem _6_0x2c_pitem_repeat
-Rule 78    _6_0x2c_pitem_repeat -> _6_0x2c_pitem_items
-Rule 79    _6_0x2c_pitem_repeat -> <empty>
-Rule 80    _6_0x2c_pitem_items -> _6_0x2c_pitem_items _6_0x2c_pitem_item
-Rule 81    _6_0x2c_pitem_items -> _6_0x2c_pitem_item
-Rule 82    _6_0x2c_pitem_item -> , pitem
-Rule 83    pitem -> variable
-Rule 84    pitem -> STRING
-Rule 85    optstep -> empty
-Rule 86    optstep -> STEP expr
-Rule 87    empty -> <empty>
+Rule 7     statement -> : command
+Rule 8     statement -> INTEGER command
+Rule 9     command -> DIM dimlist
+Rule 10    command -> RETURN
+Rule 11    command -> GOSUB INTEGER
+Rule 12    command -> DEF FN ( exprlist ) = expr
+Rule 13    command -> INPUT IDENT
+Rule 14    command -> RESTORE
+Rule 15    command -> STOP
+Rule 16    command -> REM
+Rule 17    command -> END
+Rule 18    command -> NEXT IDENT
+Rule 19    command -> FOR IDENT = INTEGER TO expr optstep
+Rule 20    command -> IF relexpr THEN command
+Rule 21    command -> IF relexpr THEN expr
+Rule 22    command -> GOTO INTEGER
+Rule 23    command -> PRINT plist
+Rule 24    command -> DATA plist
+Rule 25    command -> READ exprlist
+Rule 26    command -> LET variable = expr
+Rule 27    expr -> - expr  [precedence=right, level=4]
+Rule 28    expr -> ( expr )
+Rule 29    expr -> FUNCTIONS ( exprlist )
+Rule 30    expr -> variable
+Rule 31    expr -> STRING
+Rule 32    expr -> FLOAT
+Rule 33    expr -> INTEGER
+Rule 34    expr -> expr ^ expr  [precedence=left, level=3]
+Rule 35    expr -> expr / expr  [precedence=left, level=2]
+Rule 36    expr -> expr * expr  [precedence=left, level=2]
+Rule 37    expr -> expr - expr  [precedence=left, level=1]
+Rule 38    expr -> expr + expr  [precedence=left, level=1]
+Rule 39    relexpr -> expr NE expr
+Rule 40    relexpr -> expr = expr
+Rule 41    relexpr -> expr GE expr
+Rule 42    relexpr -> expr GT expr
+Rule 43    relexpr -> expr LE expr
+Rule 44    relexpr -> expr LT expr
+Rule 45    variable -> IDENT ( INTEGER , INTEGER )
+Rule 46    variable -> IDENT ( IDENT )
+Rule 47    variable -> IDENT ( INTEGER )
+Rule 48    variable -> IDENT
+Rule 49    dimlist -> dimitem _2_0x2c_dimitem_repeat
+Rule 50    _2_0x2c_dimitem_repeat -> _2_0x2c_dimitem_items
+Rule 51    _2_0x2c_dimitem_repeat -> <empty>
+Rule 52    _2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item
+Rule 53    _2_0x2c_dimitem_items -> _2_0x2c_dimitem_item
+Rule 54    _2_0x2c_dimitem_item -> , dimitem
+Rule 55    dimitem -> IDENT ( size )
+Rule 56    size -> INTEGER _3_0x2c_INTEGER_repeat
+Rule 57    _3_0x2c_INTEGER_repeat -> _3_0x2c_INTEGER_items
+Rule 58    _3_0x2c_INTEGER_repeat -> <empty>
+Rule 59    _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item
+Rule 60    _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_item
+Rule 61    _3_0x2c_INTEGER_item -> , INTEGER
+Rule 62    exprlist -> expr _4_0x2c_expr_repeat
+Rule 63    _4_0x2c_expr_repeat -> _4_0x2c_expr_items
+Rule 64    _4_0x2c_expr_repeat -> <empty>
+Rule 65    _4_0x2c_expr_items -> _4_0x2c_expr_items _4_0x2c_expr_item
+Rule 66    _4_0x2c_expr_items -> _4_0x2c_expr_item
+Rule 67    _4_0x2c_expr_item -> , expr
+Rule 68    plist -> expr _5_optend_expr_repeat
+Rule 69    _5_optend_expr_repeat -> _5_optend_expr_items
+Rule 70    _5_optend_expr_repeat -> <empty>
+Rule 71    _5_optend_expr_items -> _5_optend_expr_items _5_optend_expr_item
+Rule 72    _5_optend_expr_items -> _5_optend_expr_item
+Rule 73    _5_optend_expr_item -> optend expr
+Rule 74    optend -> ;
+Rule 75    optend -> ,
+Rule 76    optstep -> empty
+Rule 77    optstep -> STEP expr
+Rule 78    empty -> <empty>
 
 Terminals, with rules where they appear:
 
-(                    : 11 26 27 42 43 51
-)                    : 11 26 27 42 43 51
-*                    : 33
-+                    : 35
-,                    : 42 50 57 63 69 82
--                    : 25 34 70 71
-/                    : 32
-=                    : 11 18 24 37
-DATA                 : 22
-DEF                  : 11
-DIM                  : 8
-END                  : 16
-FLOAT                : 29 70 72 75
-FN                   : 11
-FOR                  : 18
-FUNCTIONS            : 27
-GE                   : 38
-GOSUB                : 10
-GOTO                 : 20
-GT                   : 39
-IDENT                : 12 17 18 42 43 44 51
-IF                   : 19
-INPUT                : 12
-INTEGER              : 7 10 18 19 20 30 42 42 43 52 57 71 73 76
-LE                   : 40
-LET                  : 24
-LT                   : 41
-NE                   : 36
-NEXT                 : 17
-PRINT                : 21
-READ                 : 23
-REM                  : 15
-RESTORE              : 13
-RETURN               : 9
-STEP                 : 86
-STOP                 : 14
-STRING               : 84
-THEN                 : 19
-TO                   : 18
-^                    : 31
+(                    : 12 28 29 45 46 47 55
+)                    : 12 28 29 45 46 47 55
+*                    : 36
++                    : 38
+,                    : 45 54 61 67 75
+-                    : 27 37
+/                    : 35
+:                    : 7
+;                    : 74
+=                    : 12 19 26 40
+DATA                 : 24
+DEF                  : 12
+DIM                  : 9
+END                  : 17
+FLOAT                : 32
+FN                   : 12
+FOR                  : 19
+FUNCTIONS            : 29
+GE                   : 41
+GOSUB                : 11
+GOTO                 : 22
+GT                   : 42
+IDENT                : 13 18 19 45 46 46 47 48 55
+IF                   : 20 21
+INPUT                : 13
+INTEGER              : 8 11 19 22 33 45 45 47 56 61
+LE                   : 43
+LET                  : 26
+LT                   : 44
+NE                   : 39
+NEXT                 : 18
+PRINT                : 23
+READ                 : 25
+REM                  : 16
+RESTORE              : 14
+RETURN               : 10
+STEP                 : 77
+STOP                 : 15
+STRING               : 31
+THEN                 : 20 21
+TO                   : 19
+^                    : 34
 error                : 
 
 Nonterminals, with rules where they appear:
@@ -138,46 +131,42 @@ Nonterminals, with rules where they appear:
 _1_statement_item    : 4 5
 _1_statement_items   : 2 4
 _1_statement_repeat  : 1
-_2_0x2c_dimitem_item : 48 49
-_2_0x2c_dimitem_items : 46 48
-_2_0x2c_dimitem_repeat : 45
-_3_0x2c_INTEGER_item : 55 56
-_3_0x2c_INTEGER_items : 53 55
-_3_0x2c_INTEGER_repeat : 52
-_4_0x2c_variable_item : 61 62
-_4_0x2c_variable_items : 59 61
-_4_0x2c_variable_repeat : 58
-_5_0x2c_number_item  : 67 68
-_5_0x2c_number_items : 65 67
-_5_0x2c_number_repeat : 64
-_6_0x2c_pitem_item   : 80 81
-_6_0x2c_pitem_items  : 78 80
-_6_0x2c_pitem_repeat : 77
-command              : 7
-dimitem              : 45 50
-dimlist              : 8
-empty                : 85
-expr                 : 11 18 24 25 26 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 39 40 40 41 41 86
-funcValue            : 27
-number               : 64 69
-numlist              : 22
-optstep              : 18
-pitem                : 77 82
-plist                : 21
+_2_0x2c_dimitem_item : 52 53
+_2_0x2c_dimitem_items : 50 52
+_2_0x2c_dimitem_repeat : 49
+_3_0x2c_INTEGER_item : 59 60
+_3_0x2c_INTEGER_items : 57 59
+_3_0x2c_INTEGER_repeat : 56
+_4_0x2c_expr_item    : 65 66
+_4_0x2c_expr_items   : 63 65
+_4_0x2c_expr_repeat  : 62
+_5_optend_expr_item  : 71 72
+_5_optend_expr_items : 69 71
+_5_optend_expr_repeat : 68
+command              : 7 8 20
+dimitem              : 49 54
+dimlist              : 9
+empty                : 76
+expr                 : 12 19 21 26 27 28 34 34 35 35 36 36 37 37 38 38 39 39 40 40 41 41 42 42 43 43 44 44 62 67 68 73 77
+exprlist             : 12 25 29
+optend               : 73
+optstep              : 19
+plist                : 23 24
 program              : 0
-relexpr              : 19
-size                 : 51
+relexpr              : 20 21
+size                 : 55
 statement            : 1 6
-variable             : 24 28 58 63 74 83
-varlist              : 11 23
+variable             : 26 30
 
 
 state 0
 
     (0) S' -> . program
     (1) program -> . statement _1_statement_repeat
-    (7) statement -> . INTEGER command
-    INTEGER         shift and go to state 3
+    (7) statement -> . : command
+    (8) statement -> . INTEGER command
+    :               shift and go to state 3
+    INTEGER         shift and go to state 4
 
     program                        shift and go to state 1
     statement                      shift and go to state 2
@@ -195,1906 +184,2290 @@ state 2
     (4) _1_statement_items -> . _1_statement_items _1_statement_item
     (5) _1_statement_items -> . _1_statement_item
     (6) _1_statement_item -> . statement
-    (7) statement -> . INTEGER command
+    (7) statement -> . : command
+    (8) statement -> . INTEGER command
     $end            reduce using rule 3 (_1_statement_repeat -> .)
-    INTEGER         shift and go to state 3
+    :               shift and go to state 3
+    INTEGER         shift and go to state 4
 
-    statement                      shift and go to state 4
-    _1_statement_repeat            shift and go to state 5
-    _1_statement_items             shift and go to state 6
-    _1_statement_item              shift and go to state 7
+    statement                      shift and go to state 5
+    _1_statement_repeat            shift and go to state 6
+    _1_statement_items             shift and go to state 7
+    _1_statement_item              shift and go to state 8
 
 state 3
 
-    (7) statement -> INTEGER . command
-    (8) command -> . DIM dimlist
-    (9) command -> . RETURN
-    (10) command -> . GOSUB INTEGER
-    (11) command -> . DEF FN ( varlist ) = expr
-    (12) command -> . INPUT IDENT
-    (13) command -> . RESTORE
-    (14) command -> . STOP
-    (15) command -> . REM
-    (16) command -> . END
-    (17) command -> . NEXT IDENT
-    (18) command -> . FOR IDENT = INTEGER TO expr optstep
-    (19) command -> . IF relexpr THEN INTEGER
-    (20) command -> . GOTO INTEGER
-    (21) command -> . PRINT plist
-    (22) command -> . DATA numlist
-    (23) command -> . READ varlist
-    (24) command -> . LET variable = expr
-    DIM             shift and go to state 9
-    RETURN          shift and go to state 10
-    GOSUB           shift and go to state 11
-    DEF             shift and go to state 12
-    INPUT           shift and go to state 13
-    RESTORE         shift and go to state 14
-    STOP            shift and go to state 15
-    REM             shift and go to state 16
-    END             shift and go to state 17
-    NEXT            shift and go to state 18
-    FOR             shift and go to state 19
-    IF              shift and go to state 20
-    GOTO            shift and go to state 21
-    PRINT           shift and go to state 22
-    DATA            shift and go to state 23
-    READ            shift and go to state 24
-    LET             shift and go to state 25
+    (7) statement -> : . command
+    (9) command -> . DIM dimlist
+    (10) command -> . RETURN
+    (11) command -> . GOSUB INTEGER
+    (12) command -> . DEF FN ( exprlist ) = expr
+    (13) command -> . INPUT IDENT
+    (14) command -> . RESTORE
+    (15) command -> . STOP
+    (16) command -> . REM
+    (17) command -> . END
+    (18) command -> . NEXT IDENT
+    (19) command -> . FOR IDENT = INTEGER TO expr optstep
+    (20) command -> . IF relexpr THEN command
+    (21) command -> . IF relexpr THEN expr
+    (22) command -> . GOTO INTEGER
+    (23) command -> . PRINT plist
+    (24) command -> . DATA plist
+    (25) command -> . READ exprlist
+    (26) command -> . LET variable = expr
+    DIM             shift and go to state 10
+    RETURN          shift and go to state 11
+    GOSUB           shift and go to state 12
+    DEF             shift and go to state 13
+    INPUT           shift and go to state 14
+    RESTORE         shift and go to state 15
+    STOP            shift and go to state 16
+    REM             shift and go to state 17
+    END             shift and go to state 18
+    NEXT            shift and go to state 19
+    FOR             shift and go to state 20
+    IF              shift and go to state 21
+    GOTO            shift and go to state 22
+    PRINT           shift and go to state 23
+    DATA            shift and go to state 24
+    READ            shift and go to state 25
+    LET             shift and go to state 26
 
-    command                        shift and go to state 8
+    command                        shift and go to state 9
 
 state 4
 
+    (8) statement -> INTEGER . command
+    (9) command -> . DIM dimlist
+    (10) command -> . RETURN
+    (11) command -> . GOSUB INTEGER
+    (12) command -> . DEF FN ( exprlist ) = expr
+    (13) command -> . INPUT IDENT
+    (14) command -> . RESTORE
+    (15) command -> . STOP
+    (16) command -> . REM
+    (17) command -> . END
+    (18) command -> . NEXT IDENT
+    (19) command -> . FOR IDENT = INTEGER TO expr optstep
+    (20) command -> . IF relexpr THEN command
+    (21) command -> . IF relexpr THEN expr
+    (22) command -> . GOTO INTEGER
+    (23) command -> . PRINT plist
+    (24) command -> . DATA plist
+    (25) command -> . READ exprlist
+    (26) command -> . LET variable = expr
+    DIM             shift and go to state 10
+    RETURN          shift and go to state 11
+    GOSUB           shift and go to state 12
+    DEF             shift and go to state 13
+    INPUT           shift and go to state 14
+    RESTORE         shift and go to state 15
+    STOP            shift and go to state 16
+    REM             shift and go to state 17
+    END             shift and go to state 18
+    NEXT            shift and go to state 19
+    FOR             shift and go to state 20
+    IF              shift and go to state 21
+    GOTO            shift and go to state 22
+    PRINT           shift and go to state 23
+    DATA            shift and go to state 24
+    READ            shift and go to state 25
+    LET             shift and go to state 26
+
+    command                        shift and go to state 27
+
+state 5
+
     (6) _1_statement_item -> statement .
+    :               reduce using rule 6 (_1_statement_item -> statement .)
     INTEGER         reduce using rule 6 (_1_statement_item -> statement .)
     $end            reduce using rule 6 (_1_statement_item -> statement .)
 
 
-state 5
+state 6
 
     (1) program -> statement _1_statement_repeat .
     $end            reduce using rule 1 (program -> statement _1_statement_repeat .)
 
 
-state 6
+state 7
 
     (2) _1_statement_repeat -> _1_statement_items .
     (4) _1_statement_items -> _1_statement_items . _1_statement_item
     (6) _1_statement_item -> . statement
-    (7) statement -> . INTEGER command
+    (7) statement -> . : command
+    (8) statement -> . INTEGER command
     $end            reduce using rule 2 (_1_statement_repeat -> _1_statement_items .)
-    INTEGER         shift and go to state 3
+    :               shift and go to state 3
+    INTEGER         shift and go to state 4
 
-    _1_statement_item              shift and go to state 26
-    statement                      shift and go to state 4
+    _1_statement_item              shift and go to state 28
+    statement                      shift and go to state 5
 
-state 7
+state 8
 
     (5) _1_statement_items -> _1_statement_item .
+    :               reduce using rule 5 (_1_statement_items -> _1_statement_item .)
     INTEGER         reduce using rule 5 (_1_statement_items -> _1_statement_item .)
     $end            reduce using rule 5 (_1_statement_items -> _1_statement_item .)
 
 
-state 8
-
-    (7) statement -> INTEGER command .
-    INTEGER         reduce using rule 7 (statement -> INTEGER command .)
-    $end            reduce using rule 7 (statement -> INTEGER command .)
-
-
 state 9
 
-    (8) command -> DIM . dimlist
-    (45) dimlist -> . dimitem _2_0x2c_dimitem_repeat
-    (51) dimitem -> . IDENT ( size )
-    IDENT           shift and go to state 29
+    (7) statement -> : command .
+    :               reduce using rule 7 (statement -> : command .)
+    INTEGER         reduce using rule 7 (statement -> : command .)
+    $end            reduce using rule 7 (statement -> : command .)
 
-    dimlist                        shift and go to state 27
-    dimitem                        shift and go to state 28
 
 state 10
 
-    (9) command -> RETURN .
-    INTEGER         reduce using rule 9 (command -> RETURN .)
-    $end            reduce using rule 9 (command -> RETURN .)
+    (9) command -> DIM . dimlist
+    (49) dimlist -> . dimitem _2_0x2c_dimitem_repeat
+    (55) dimitem -> . IDENT ( size )
+    IDENT           shift and go to state 31
 
+    dimlist                        shift and go to state 29
+    dimitem                        shift and go to state 30
 
 state 11
 
-    (10) command -> GOSUB . INTEGER
-    INTEGER         shift and go to state 30
+    (10) command -> RETURN .
+    :               reduce using rule 10 (command -> RETURN .)
+    INTEGER         reduce using rule 10 (command -> RETURN .)
+    $end            reduce using rule 10 (command -> RETURN .)
 
 
 state 12
 
-    (11) command -> DEF . FN ( varlist ) = expr
-    FN              shift and go to state 31
+    (11) command -> GOSUB . INTEGER
+    INTEGER         shift and go to state 32
 
 
 state 13
 
-    (12) command -> INPUT . IDENT
-    IDENT           shift and go to state 32
+    (12) command -> DEF . FN ( exprlist ) = expr
+    FN              shift and go to state 33
 
 
 state 14
 
-    (13) command -> RESTORE .
-    INTEGER         reduce using rule 13 (command -> RESTORE .)
-    $end            reduce using rule 13 (command -> RESTORE .)
+    (13) command -> INPUT . IDENT
+    IDENT           shift and go to state 34
 
 
 state 15
 
-    (14) command -> STOP .
-    INTEGER         reduce using rule 14 (command -> STOP .)
-    $end            reduce using rule 14 (command -> STOP .)
+    (14) command -> RESTORE .
+    :               reduce using rule 14 (command -> RESTORE .)
+    INTEGER         reduce using rule 14 (command -> RESTORE .)
+    $end            reduce using rule 14 (command -> RESTORE .)
 
 
 state 16
 
-    (15) command -> REM .
-    INTEGER         reduce using rule 15 (command -> REM .)
-    $end            reduce using rule 15 (command -> REM .)
+    (15) command -> STOP .
+    :               reduce using rule 15 (command -> STOP .)
+    INTEGER         reduce using rule 15 (command -> STOP .)
+    $end            reduce using rule 15 (command -> STOP .)
 
 
 state 17
 
-    (16) command -> END .
-    INTEGER         reduce using rule 16 (command -> END .)
-    $end            reduce using rule 16 (command -> END .)
+    (16) command -> REM .
+    :               reduce using rule 16 (command -> REM .)
+    INTEGER         reduce using rule 16 (command -> REM .)
+    $end            reduce using rule 16 (command -> REM .)
 
 
 state 18
 
-    (17) command -> NEXT . IDENT
-    IDENT           shift and go to state 33
+    (17) command -> END .
+    :               reduce using rule 17 (command -> END .)
+    INTEGER         reduce using rule 17 (command -> END .)
+    $end            reduce using rule 17 (command -> END .)
 
 
 state 19
 
-    (18) command -> FOR . IDENT = INTEGER TO expr optstep
-    IDENT           shift and go to state 34
+    (18) command -> NEXT . IDENT
+    IDENT           shift and go to state 35
 
 
 state 20
 
-    (19) command -> IF . relexpr THEN INTEGER
-    (36) relexpr -> . expr NE expr
-    (37) relexpr -> . expr = expr
-    (38) relexpr -> . expr GE expr
-    (39) relexpr -> . expr GT expr
-    (40) relexpr -> . expr LE expr
-    (41) relexpr -> . expr LT expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (19) command -> FOR . IDENT = INTEGER TO expr optstep
+    IDENT           shift and go to state 36
 
-    relexpr                        shift and go to state 35
-    expr                           shift and go to state 37
-    variable                       shift and go to state 41
 
 state 21
 
-    (20) command -> GOTO . INTEGER
-    INTEGER         shift and go to state 44
+    (20) command -> IF . relexpr THEN command
+    (21) command -> IF . relexpr THEN expr
+    (39) relexpr -> . expr NE expr
+    (40) relexpr -> . expr = expr
+    (41) relexpr -> . expr GE expr
+    (42) relexpr -> . expr GT expr
+    (43) relexpr -> . expr LE expr
+    (44) relexpr -> . expr LT expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    relexpr                        shift and go to state 37
+    expr                           shift and go to state 38
+    variable                       shift and go to state 42
 
 state 22
 
-    (21) command -> PRINT . plist
-    (77) plist -> . pitem _6_0x2c_pitem_repeat
-    (83) pitem -> . variable
-    (84) pitem -> . STRING
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    STRING          shift and go to state 48
-    IDENT           shift and go to state 43
+    (22) command -> GOTO . INTEGER
+    INTEGER         shift and go to state 47
 
-    plist                          shift and go to state 45
-    pitem                          shift and go to state 46
-    variable                       shift and go to state 47
 
 state 23
 
-    (22) command -> DATA . numlist
-    (64) numlist -> . number _5_0x2c_number_repeat
-    (70) number -> . - FLOAT
-    (71) number -> . - INTEGER
-    (72) number -> . FLOAT
-    (73) number -> . INTEGER
-    -               shift and go to state 51
-    FLOAT           shift and go to state 52
-    INTEGER         shift and go to state 53
+    (23) command -> PRINT . plist
+    (68) plist -> . expr _5_optend_expr_repeat
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    numlist                        shift and go to state 49
-    number                         shift and go to state 50
+    plist                          shift and go to state 48
+    expr                           shift and go to state 49
+    variable                       shift and go to state 42
 
 state 24
 
-    (23) command -> READ . varlist
-    (58) varlist -> . variable _4_0x2c_variable_repeat
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    IDENT           shift and go to state 43
+    (24) command -> DATA . plist
+    (68) plist -> . expr _5_optend_expr_repeat
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    varlist                        shift and go to state 54
-    variable                       shift and go to state 55
+    plist                          shift and go to state 50
+    expr                           shift and go to state 49
+    variable                       shift and go to state 42
 
 state 25
 
-    (24) command -> LET . variable = expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    IDENT           shift and go to state 43
+    (25) command -> READ . exprlist
+    (62) exprlist -> . expr _4_0x2c_expr_repeat
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    variable                       shift and go to state 56
+    exprlist                       shift and go to state 51
+    expr                           shift and go to state 52
+    variable                       shift and go to state 42
 
 state 26
 
-    (4) _1_statement_items -> _1_statement_items _1_statement_item .
-    INTEGER         reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
-    $end            reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    (26) command -> LET . variable = expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    IDENT           shift and go to state 46
 
+    variable                       shift and go to state 53
 
 state 27
 
-    (8) command -> DIM dimlist .
-    INTEGER         reduce using rule 8 (command -> DIM dimlist .)
-    $end            reduce using rule 8 (command -> DIM dimlist .)
+    (8) statement -> INTEGER command .
+    :               reduce using rule 8 (statement -> INTEGER command .)
+    INTEGER         reduce using rule 8 (statement -> INTEGER command .)
+    $end            reduce using rule 8 (statement -> INTEGER command .)
 
 
 state 28
 
-    (45) dimlist -> dimitem . _2_0x2c_dimitem_repeat
-    (46) _2_0x2c_dimitem_repeat -> . _2_0x2c_dimitem_items
-    (47) _2_0x2c_dimitem_repeat -> .
-    (48) _2_0x2c_dimitem_items -> . _2_0x2c_dimitem_items _2_0x2c_dimitem_item
-    (49) _2_0x2c_dimitem_items -> . _2_0x2c_dimitem_item
-    (50) _2_0x2c_dimitem_item -> . , dimitem
-    INTEGER         reduce using rule 47 (_2_0x2c_dimitem_repeat -> .)
-    $end            reduce using rule 47 (_2_0x2c_dimitem_repeat -> .)
-    ,               shift and go to state 60
+    (4) _1_statement_items -> _1_statement_items _1_statement_item .
+    :               reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    INTEGER         reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
+    $end            reduce using rule 4 (_1_statement_items -> _1_statement_items _1_statement_item .)
 
-    _2_0x2c_dimitem_repeat         shift and go to state 57
-    _2_0x2c_dimitem_items          shift and go to state 58
-    _2_0x2c_dimitem_item           shift and go to state 59
 
 state 29
 
-    (51) dimitem -> IDENT . ( size )
-    (               shift and go to state 61
+    (9) command -> DIM dimlist .
+    :               reduce using rule 9 (command -> DIM dimlist .)
+    INTEGER         reduce using rule 9 (command -> DIM dimlist .)
+    $end            reduce using rule 9 (command -> DIM dimlist .)
 
 
 state 30
 
-    (10) command -> GOSUB INTEGER .
-    INTEGER         reduce using rule 10 (command -> GOSUB INTEGER .)
-    $end            reduce using rule 10 (command -> GOSUB INTEGER .)
+    (49) dimlist -> dimitem . _2_0x2c_dimitem_repeat
+    (50) _2_0x2c_dimitem_repeat -> . _2_0x2c_dimitem_items
+    (51) _2_0x2c_dimitem_repeat -> .
+    (52) _2_0x2c_dimitem_items -> . _2_0x2c_dimitem_items _2_0x2c_dimitem_item
+    (53) _2_0x2c_dimitem_items -> . _2_0x2c_dimitem_item
+    (54) _2_0x2c_dimitem_item -> . , dimitem
+    :               reduce using rule 51 (_2_0x2c_dimitem_repeat -> .)
+    INTEGER         reduce using rule 51 (_2_0x2c_dimitem_repeat -> .)
+    $end            reduce using rule 51 (_2_0x2c_dimitem_repeat -> .)
+    ,               shift and go to state 57
 
+    _2_0x2c_dimitem_repeat         shift and go to state 54
+    _2_0x2c_dimitem_items          shift and go to state 55
+    _2_0x2c_dimitem_item           shift and go to state 56
 
 state 31
 
-    (11) command -> DEF FN . ( varlist ) = expr
-    (               shift and go to state 62
+    (55) dimitem -> IDENT . ( size )
+    (               shift and go to state 58
 
 
 state 32
 
-    (12) command -> INPUT IDENT .
-    INTEGER         reduce using rule 12 (command -> INPUT IDENT .)
-    $end            reduce using rule 12 (command -> INPUT IDENT .)
+    (11) command -> GOSUB INTEGER .
+    :               reduce using rule 11 (command -> GOSUB INTEGER .)
+    INTEGER         reduce using rule 11 (command -> GOSUB INTEGER .)
+    $end            reduce using rule 11 (command -> GOSUB INTEGER .)
 
 
 state 33
 
-    (17) command -> NEXT IDENT .
-    INTEGER         reduce using rule 17 (command -> NEXT IDENT .)
-    $end            reduce using rule 17 (command -> NEXT IDENT .)
+    (12) command -> DEF FN . ( exprlist ) = expr
+    (               shift and go to state 59
 
 
 state 34
 
-    (18) command -> FOR IDENT . = INTEGER TO expr optstep
-    =               shift and go to state 63
+    (13) command -> INPUT IDENT .
+    :               reduce using rule 13 (command -> INPUT IDENT .)
+    INTEGER         reduce using rule 13 (command -> INPUT IDENT .)
+    $end            reduce using rule 13 (command -> INPUT IDENT .)
 
 
 state 35
 
-    (19) command -> IF relexpr . THEN INTEGER
-    THEN            shift and go to state 64
+    (18) command -> NEXT IDENT .
+    :               reduce using rule 18 (command -> NEXT IDENT .)
+    INTEGER         reduce using rule 18 (command -> NEXT IDENT .)
+    $end            reduce using rule 18 (command -> NEXT IDENT .)
 
 
 state 36
 
-    (30) expr -> INTEGER .
-    NE              reduce using rule 30 (expr -> INTEGER .)
-    =               reduce using rule 30 (expr -> INTEGER .)
-    GE              reduce using rule 30 (expr -> INTEGER .)
-    GT              reduce using rule 30 (expr -> INTEGER .)
-    LE              reduce using rule 30 (expr -> INTEGER .)
-    LT              reduce using rule 30 (expr -> INTEGER .)
-    ^               reduce using rule 30 (expr -> INTEGER .)
-    /               reduce using rule 30 (expr -> INTEGER .)
-    *               reduce using rule 30 (expr -> INTEGER .)
-    -               reduce using rule 30 (expr -> INTEGER .)
-    +               reduce using rule 30 (expr -> INTEGER .)
-    )               reduce using rule 30 (expr -> INTEGER .)
-    THEN            reduce using rule 30 (expr -> INTEGER .)
-    INTEGER         reduce using rule 30 (expr -> INTEGER .)
-    $end            reduce using rule 30 (expr -> INTEGER .)
-    STEP            reduce using rule 30 (expr -> INTEGER .)
+    (19) command -> FOR IDENT . = INTEGER TO expr optstep
+    =               shift and go to state 60
 
 
 state 37
 
-    (36) relexpr -> expr . NE expr
-    (37) relexpr -> expr . = expr
-    (38) relexpr -> expr . GE expr
-    (39) relexpr -> expr . GT expr
-    (40) relexpr -> expr . LE expr
-    (41) relexpr -> expr . LT expr
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    NE              shift and go to state 65
-    =               shift and go to state 66
-    GE              shift and go to state 67
-    GT              shift and go to state 68
-    LE              shift and go to state 69
-    LT              shift and go to state 70
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (20) command -> IF relexpr . THEN command
+    (21) command -> IF relexpr . THEN expr
+    THEN            shift and go to state 61
 
 
 state 38
 
-    (25) expr -> - . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (39) relexpr -> expr . NE expr
+    (40) relexpr -> expr . = expr
+    (41) relexpr -> expr . GE expr
+    (42) relexpr -> expr . GT expr
+    (43) relexpr -> expr . LE expr
+    (44) relexpr -> expr . LT expr
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    NE              shift and go to state 62
+    =               shift and go to state 63
+    GE              shift and go to state 64
+    GT              shift and go to state 65
+    LE              shift and go to state 66
+    LT              shift and go to state 67
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
-    expr                           shift and go to state 76
-    variable                       shift and go to state 41
 
 state 39
 
-    (26) expr -> ( . expr )
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (27) expr -> - . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 77
-    variable                       shift and go to state 41
+    expr                           shift and go to state 73
+    variable                       shift and go to state 42
 
 state 40
 
-    (27) expr -> FUNCTIONS . ( funcValue )
-    (               shift and go to state 78
+    (28) expr -> ( . expr )
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    expr                           shift and go to state 74
+    variable                       shift and go to state 42
 
 state 41
 
-    (28) expr -> variable .
-    NE              reduce using rule 28 (expr -> variable .)
-    =               reduce using rule 28 (expr -> variable .)
-    GE              reduce using rule 28 (expr -> variable .)
-    GT              reduce using rule 28 (expr -> variable .)
-    LE              reduce using rule 28 (expr -> variable .)
-    LT              reduce using rule 28 (expr -> variable .)
-    ^               reduce using rule 28 (expr -> variable .)
-    /               reduce using rule 28 (expr -> variable .)
-    *               reduce using rule 28 (expr -> variable .)
-    -               reduce using rule 28 (expr -> variable .)
-    +               reduce using rule 28 (expr -> variable .)
-    )               reduce using rule 28 (expr -> variable .)
-    THEN            reduce using rule 28 (expr -> variable .)
-    INTEGER         reduce using rule 28 (expr -> variable .)
-    $end            reduce using rule 28 (expr -> variable .)
-    STEP            reduce using rule 28 (expr -> variable .)
+    (29) expr -> FUNCTIONS . ( exprlist )
+    (               shift and go to state 75
 
 
 state 42
 
-    (29) expr -> FLOAT .
-    NE              reduce using rule 29 (expr -> FLOAT .)
-    =               reduce using rule 29 (expr -> FLOAT .)
-    GE              reduce using rule 29 (expr -> FLOAT .)
-    GT              reduce using rule 29 (expr -> FLOAT .)
-    LE              reduce using rule 29 (expr -> FLOAT .)
-    LT              reduce using rule 29 (expr -> FLOAT .)
-    ^               reduce using rule 29 (expr -> FLOAT .)
-    /               reduce using rule 29 (expr -> FLOAT .)
-    *               reduce using rule 29 (expr -> FLOAT .)
-    -               reduce using rule 29 (expr -> FLOAT .)
-    +               reduce using rule 29 (expr -> FLOAT .)
-    )               reduce using rule 29 (expr -> FLOAT .)
-    THEN            reduce using rule 29 (expr -> FLOAT .)
-    INTEGER         reduce using rule 29 (expr -> FLOAT .)
-    $end            reduce using rule 29 (expr -> FLOAT .)
-    STEP            reduce using rule 29 (expr -> FLOAT .)
+    (30) expr -> variable .
+    NE              reduce using rule 30 (expr -> variable .)
+    =               reduce using rule 30 (expr -> variable .)
+    GE              reduce using rule 30 (expr -> variable .)
+    GT              reduce using rule 30 (expr -> variable .)
+    LE              reduce using rule 30 (expr -> variable .)
+    LT              reduce using rule 30 (expr -> variable .)
+    ^               reduce using rule 30 (expr -> variable .)
+    /               reduce using rule 30 (expr -> variable .)
+    *               reduce using rule 30 (expr -> variable .)
+    -               reduce using rule 30 (expr -> variable .)
+    +               reduce using rule 30 (expr -> variable .)
+    ;               reduce using rule 30 (expr -> variable .)
+    ,               reduce using rule 30 (expr -> variable .)
+    :               reduce using rule 30 (expr -> variable .)
+    INTEGER         reduce using rule 30 (expr -> variable .)
+    $end            reduce using rule 30 (expr -> variable .)
+    )               reduce using rule 30 (expr -> variable .)
+    THEN            reduce using rule 30 (expr -> variable .)
+    STEP            reduce using rule 30 (expr -> variable .)
 
 
 state 43
 
-    (42) variable -> IDENT . ( INTEGER , INTEGER )
-    (43) variable -> IDENT . ( INTEGER )
-    (44) variable -> IDENT .
-    (               shift and go to state 79
-    NE              reduce using rule 44 (variable -> IDENT .)
-    =               reduce using rule 44 (variable -> IDENT .)
-    GE              reduce using rule 44 (variable -> IDENT .)
-    GT              reduce using rule 44 (variable -> IDENT .)
-    LE              reduce using rule 44 (variable -> IDENT .)
-    LT              reduce using rule 44 (variable -> IDENT .)
-    ^               reduce using rule 44 (variable -> IDENT .)
-    /               reduce using rule 44 (variable -> IDENT .)
-    *               reduce using rule 44 (variable -> IDENT .)
-    -               reduce using rule 44 (variable -> IDENT .)
-    +               reduce using rule 44 (variable -> IDENT .)
-    ,               reduce using rule 44 (variable -> IDENT .)
-    INTEGER         reduce using rule 44 (variable -> IDENT .)
-    $end            reduce using rule 44 (variable -> IDENT .)
-    )               reduce using rule 44 (variable -> IDENT .)
-    THEN            reduce using rule 44 (variable -> IDENT .)
-    STEP            reduce using rule 44 (variable -> IDENT .)
+    (31) expr -> STRING .
+    NE              reduce using rule 31 (expr -> STRING .)
+    =               reduce using rule 31 (expr -> STRING .)
+    GE              reduce using rule 31 (expr -> STRING .)
+    GT              reduce using rule 31 (expr -> STRING .)
+    LE              reduce using rule 31 (expr -> STRING .)
+    LT              reduce using rule 31 (expr -> STRING .)
+    ^               reduce using rule 31 (expr -> STRING .)
+    /               reduce using rule 31 (expr -> STRING .)
+    *               reduce using rule 31 (expr -> STRING .)
+    -               reduce using rule 31 (expr -> STRING .)
+    +               reduce using rule 31 (expr -> STRING .)
+    ;               reduce using rule 31 (expr -> STRING .)
+    ,               reduce using rule 31 (expr -> STRING .)
+    :               reduce using rule 31 (expr -> STRING .)
+    INTEGER         reduce using rule 31 (expr -> STRING .)
+    $end            reduce using rule 31 (expr -> STRING .)
+    )               reduce using rule 31 (expr -> STRING .)
+    THEN            reduce using rule 31 (expr -> STRING .)
+    STEP            reduce using rule 31 (expr -> STRING .)
 
 
 state 44
 
-    (20) command -> GOTO INTEGER .
-    INTEGER         reduce using rule 20 (command -> GOTO INTEGER .)
-    $end            reduce using rule 20 (command -> GOTO INTEGER .)
+    (32) expr -> FLOAT .
+    NE              reduce using rule 32 (expr -> FLOAT .)
+    =               reduce using rule 32 (expr -> FLOAT .)
+    GE              reduce using rule 32 (expr -> FLOAT .)
+    GT              reduce using rule 32 (expr -> FLOAT .)
+    LE              reduce using rule 32 (expr -> FLOAT .)
+    LT              reduce using rule 32 (expr -> FLOAT .)
+    ^               reduce using rule 32 (expr -> FLOAT .)
+    /               reduce using rule 32 (expr -> FLOAT .)
+    *               reduce using rule 32 (expr -> FLOAT .)
+    -               reduce using rule 32 (expr -> FLOAT .)
+    +               reduce using rule 32 (expr -> FLOAT .)
+    ;               reduce using rule 32 (expr -> FLOAT .)
+    ,               reduce using rule 32 (expr -> FLOAT .)
+    :               reduce using rule 32 (expr -> FLOAT .)
+    INTEGER         reduce using rule 32 (expr -> FLOAT .)
+    $end            reduce using rule 32 (expr -> FLOAT .)
+    )               reduce using rule 32 (expr -> FLOAT .)
+    THEN            reduce using rule 32 (expr -> FLOAT .)
+    STEP            reduce using rule 32 (expr -> FLOAT .)
 
 
 state 45
 
-    (21) command -> PRINT plist .
-    INTEGER         reduce using rule 21 (command -> PRINT plist .)
-    $end            reduce using rule 21 (command -> PRINT plist .)
+    (33) expr -> INTEGER .
+    NE              reduce using rule 33 (expr -> INTEGER .)
+    =               reduce using rule 33 (expr -> INTEGER .)
+    GE              reduce using rule 33 (expr -> INTEGER .)
+    GT              reduce using rule 33 (expr -> INTEGER .)
+    LE              reduce using rule 33 (expr -> INTEGER .)
+    LT              reduce using rule 33 (expr -> INTEGER .)
+    ^               reduce using rule 33 (expr -> INTEGER .)
+    /               reduce using rule 33 (expr -> INTEGER .)
+    *               reduce using rule 33 (expr -> INTEGER .)
+    -               reduce using rule 33 (expr -> INTEGER .)
+    +               reduce using rule 33 (expr -> INTEGER .)
+    ;               reduce using rule 33 (expr -> INTEGER .)
+    ,               reduce using rule 33 (expr -> INTEGER .)
+    :               reduce using rule 33 (expr -> INTEGER .)
+    INTEGER         reduce using rule 33 (expr -> INTEGER .)
+    $end            reduce using rule 33 (expr -> INTEGER .)
+    )               reduce using rule 33 (expr -> INTEGER .)
+    THEN            reduce using rule 33 (expr -> INTEGER .)
+    STEP            reduce using rule 33 (expr -> INTEGER .)
 
 
 state 46
 
-    (77) plist -> pitem . _6_0x2c_pitem_repeat
-    (78) _6_0x2c_pitem_repeat -> . _6_0x2c_pitem_items
-    (79) _6_0x2c_pitem_repeat -> .
-    (80) _6_0x2c_pitem_items -> . _6_0x2c_pitem_items _6_0x2c_pitem_item
-    (81) _6_0x2c_pitem_items -> . _6_0x2c_pitem_item
-    (82) _6_0x2c_pitem_item -> . , pitem
-    INTEGER         reduce using rule 79 (_6_0x2c_pitem_repeat -> .)
-    $end            reduce using rule 79 (_6_0x2c_pitem_repeat -> .)
-    ,               shift and go to state 83
+    (45) variable -> IDENT . ( INTEGER , INTEGER )
+    (46) variable -> IDENT . ( IDENT )
+    (47) variable -> IDENT . ( INTEGER )
+    (48) variable -> IDENT .
+    (               shift and go to state 76
+    NE              reduce using rule 48 (variable -> IDENT .)
+    =               reduce using rule 48 (variable -> IDENT .)
+    GE              reduce using rule 48 (variable -> IDENT .)
+    GT              reduce using rule 48 (variable -> IDENT .)
+    LE              reduce using rule 48 (variable -> IDENT .)
+    LT              reduce using rule 48 (variable -> IDENT .)
+    ^               reduce using rule 48 (variable -> IDENT .)
+    /               reduce using rule 48 (variable -> IDENT .)
+    *               reduce using rule 48 (variable -> IDENT .)
+    -               reduce using rule 48 (variable -> IDENT .)
+    +               reduce using rule 48 (variable -> IDENT .)
+    ;               reduce using rule 48 (variable -> IDENT .)
+    ,               reduce using rule 48 (variable -> IDENT .)
+    :               reduce using rule 48 (variable -> IDENT .)
+    INTEGER         reduce using rule 48 (variable -> IDENT .)
+    $end            reduce using rule 48 (variable -> IDENT .)
+    )               reduce using rule 48 (variable -> IDENT .)
+    THEN            reduce using rule 48 (variable -> IDENT .)
+    STEP            reduce using rule 48 (variable -> IDENT .)
 
-    _6_0x2c_pitem_repeat           shift and go to state 80
-    _6_0x2c_pitem_items            shift and go to state 81
-    _6_0x2c_pitem_item             shift and go to state 82
 
 state 47
 
-    (83) pitem -> variable .
-    ,               reduce using rule 83 (pitem -> variable .)
-    INTEGER         reduce using rule 83 (pitem -> variable .)
-    $end            reduce using rule 83 (pitem -> variable .)
+    (22) command -> GOTO INTEGER .
+    :               reduce using rule 22 (command -> GOTO INTEGER .)
+    INTEGER         reduce using rule 22 (command -> GOTO INTEGER .)
+    $end            reduce using rule 22 (command -> GOTO INTEGER .)
 
 
 state 48
 
-    (84) pitem -> STRING .
-    ,               reduce using rule 84 (pitem -> STRING .)
-    INTEGER         reduce using rule 84 (pitem -> STRING .)
-    $end            reduce using rule 84 (pitem -> STRING .)
+    (23) command -> PRINT plist .
+    :               reduce using rule 23 (command -> PRINT plist .)
+    INTEGER         reduce using rule 23 (command -> PRINT plist .)
+    $end            reduce using rule 23 (command -> PRINT plist .)
 
 
 state 49
 
-    (22) command -> DATA numlist .
-    INTEGER         reduce using rule 22 (command -> DATA numlist .)
-    $end            reduce using rule 22 (command -> DATA numlist .)
+    (68) plist -> expr . _5_optend_expr_repeat
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    (69) _5_optend_expr_repeat -> . _5_optend_expr_items
+    (70) _5_optend_expr_repeat -> .
+    (71) _5_optend_expr_items -> . _5_optend_expr_items _5_optend_expr_item
+    (72) _5_optend_expr_items -> . _5_optend_expr_item
+    (73) _5_optend_expr_item -> . optend expr
+    (74) optend -> . ;
+    (75) optend -> . ,
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
+    :               reduce using rule 70 (_5_optend_expr_repeat -> .)
+    INTEGER         reduce using rule 70 (_5_optend_expr_repeat -> .)
+    $end            reduce using rule 70 (_5_optend_expr_repeat -> .)
+    ;               shift and go to state 81
+    ,               shift and go to state 82
 
+    _5_optend_expr_repeat          shift and go to state 77
+    _5_optend_expr_items           shift and go to state 78
+    _5_optend_expr_item            shift and go to state 79
+    optend                         shift and go to state 80
 
 state 50
 
-    (64) numlist -> number . _5_0x2c_number_repeat
-    (65) _5_0x2c_number_repeat -> . _5_0x2c_number_items
-    (66) _5_0x2c_number_repeat -> .
-    (67) _5_0x2c_number_items -> . _5_0x2c_number_items _5_0x2c_number_item
-    (68) _5_0x2c_number_items -> . _5_0x2c_number_item
-    (69) _5_0x2c_number_item -> . , number
-    INTEGER         reduce using rule 66 (_5_0x2c_number_repeat -> .)
-    $end            reduce using rule 66 (_5_0x2c_number_repeat -> .)
-    ,               shift and go to state 87
+    (24) command -> DATA plist .
+    :               reduce using rule 24 (command -> DATA plist .)
+    INTEGER         reduce using rule 24 (command -> DATA plist .)
+    $end            reduce using rule 24 (command -> DATA plist .)
 
-    _5_0x2c_number_repeat          shift and go to state 84
-    _5_0x2c_number_items           shift and go to state 85
-    _5_0x2c_number_item            shift and go to state 86
 
 state 51
 
-    (70) number -> - . FLOAT
-    (71) number -> - . INTEGER
-    FLOAT           shift and go to state 88
-    INTEGER         shift and go to state 89
+    (25) command -> READ exprlist .
+    :               reduce using rule 25 (command -> READ exprlist .)
+    INTEGER         reduce using rule 25 (command -> READ exprlist .)
+    $end            reduce using rule 25 (command -> READ exprlist .)
 
 
 state 52
 
-    (72) number -> FLOAT .
-    ,               reduce using rule 72 (number -> FLOAT .)
-    INTEGER         reduce using rule 72 (number -> FLOAT .)
-    $end            reduce using rule 72 (number -> FLOAT .)
+    (62) exprlist -> expr . _4_0x2c_expr_repeat
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    (63) _4_0x2c_expr_repeat -> . _4_0x2c_expr_items
+    (64) _4_0x2c_expr_repeat -> .
+    (65) _4_0x2c_expr_items -> . _4_0x2c_expr_items _4_0x2c_expr_item
+    (66) _4_0x2c_expr_items -> . _4_0x2c_expr_item
+    (67) _4_0x2c_expr_item -> . , expr
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
+    :               reduce using rule 64 (_4_0x2c_expr_repeat -> .)
+    INTEGER         reduce using rule 64 (_4_0x2c_expr_repeat -> .)
+    $end            reduce using rule 64 (_4_0x2c_expr_repeat -> .)
+    )               reduce using rule 64 (_4_0x2c_expr_repeat -> .)
+    ,               shift and go to state 86
 
+    _4_0x2c_expr_repeat            shift and go to state 83
+    _4_0x2c_expr_items             shift and go to state 84
+    _4_0x2c_expr_item              shift and go to state 85
 
 state 53
 
-    (73) number -> INTEGER .
-    ,               reduce using rule 73 (number -> INTEGER .)
-    INTEGER         reduce using rule 73 (number -> INTEGER .)
-    $end            reduce using rule 73 (number -> INTEGER .)
+    (26) command -> LET variable . = expr
+    =               shift and go to state 87
 
 
 state 54
 
-    (23) command -> READ varlist .
-    INTEGER         reduce using rule 23 (command -> READ varlist .)
-    $end            reduce using rule 23 (command -> READ varlist .)
+    (49) dimlist -> dimitem _2_0x2c_dimitem_repeat .
+    :               reduce using rule 49 (dimlist -> dimitem _2_0x2c_dimitem_repeat .)
+    INTEGER         reduce using rule 49 (dimlist -> dimitem _2_0x2c_dimitem_repeat .)
+    $end            reduce using rule 49 (dimlist -> dimitem _2_0x2c_dimitem_repeat .)
 
 
 state 55
 
-    (58) varlist -> variable . _4_0x2c_variable_repeat
-    (59) _4_0x2c_variable_repeat -> . _4_0x2c_variable_items
-    (60) _4_0x2c_variable_repeat -> .
-    (61) _4_0x2c_variable_items -> . _4_0x2c_variable_items _4_0x2c_variable_item
-    (62) _4_0x2c_variable_items -> . _4_0x2c_variable_item
-    (63) _4_0x2c_variable_item -> . , variable
-    INTEGER         reduce using rule 60 (_4_0x2c_variable_repeat -> .)
-    $end            reduce using rule 60 (_4_0x2c_variable_repeat -> .)
-    )               reduce using rule 60 (_4_0x2c_variable_repeat -> .)
-    ,               shift and go to state 93
+    (50) _2_0x2c_dimitem_repeat -> _2_0x2c_dimitem_items .
+    (52) _2_0x2c_dimitem_items -> _2_0x2c_dimitem_items . _2_0x2c_dimitem_item
+    (54) _2_0x2c_dimitem_item -> . , dimitem
+    :               reduce using rule 50 (_2_0x2c_dimitem_repeat -> _2_0x2c_dimitem_items .)
+    INTEGER         reduce using rule 50 (_2_0x2c_dimitem_repeat -> _2_0x2c_dimitem_items .)
+    $end            reduce using rule 50 (_2_0x2c_dimitem_repeat -> _2_0x2c_dimitem_items .)
+    ,               shift and go to state 57
 
-    _4_0x2c_variable_repeat        shift and go to state 90
-    _4_0x2c_variable_items         shift and go to state 91
-    _4_0x2c_variable_item          shift and go to state 92
+    _2_0x2c_dimitem_item           shift and go to state 88
 
 state 56
 
-    (24) command -> LET variable . = expr
-    =               shift and go to state 94
+    (53) _2_0x2c_dimitem_items -> _2_0x2c_dimitem_item .
+    ,               reduce using rule 53 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_item .)
+    :               reduce using rule 53 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_item .)
+    INTEGER         reduce using rule 53 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_item .)
+    $end            reduce using rule 53 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_item .)
 
 
 state 57
 
-    (45) dimlist -> dimitem _2_0x2c_dimitem_repeat .
-    INTEGER         reduce using rule 45 (dimlist -> dimitem _2_0x2c_dimitem_repeat .)
-    $end            reduce using rule 45 (dimlist -> dimitem _2_0x2c_dimitem_repeat .)
+    (54) _2_0x2c_dimitem_item -> , . dimitem
+    (55) dimitem -> . IDENT ( size )
+    IDENT           shift and go to state 31
 
+    dimitem                        shift and go to state 89
 
 state 58
 
-    (46) _2_0x2c_dimitem_repeat -> _2_0x2c_dimitem_items .
-    (48) _2_0x2c_dimitem_items -> _2_0x2c_dimitem_items . _2_0x2c_dimitem_item
-    (50) _2_0x2c_dimitem_item -> . , dimitem
-    INTEGER         reduce using rule 46 (_2_0x2c_dimitem_repeat -> _2_0x2c_dimitem_items .)
-    $end            reduce using rule 46 (_2_0x2c_dimitem_repeat -> _2_0x2c_dimitem_items .)
-    ,               shift and go to state 60
+    (55) dimitem -> IDENT ( . size )
+    (56) size -> . INTEGER _3_0x2c_INTEGER_repeat
+    INTEGER         shift and go to state 91
 
-    _2_0x2c_dimitem_item           shift and go to state 95
+    size                           shift and go to state 90
 
 state 59
 
-    (49) _2_0x2c_dimitem_items -> _2_0x2c_dimitem_item .
-    ,               reduce using rule 49 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_item .)
-    INTEGER         reduce using rule 49 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_item .)
-    $end            reduce using rule 49 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_item .)
+    (12) command -> DEF FN ( . exprlist ) = expr
+    (62) exprlist -> . expr _4_0x2c_expr_repeat
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    exprlist                       shift and go to state 92
+    expr                           shift and go to state 52
+    variable                       shift and go to state 42
 
 state 60
 
-    (50) _2_0x2c_dimitem_item -> , . dimitem
-    (51) dimitem -> . IDENT ( size )
-    IDENT           shift and go to state 29
+    (19) command -> FOR IDENT = . INTEGER TO expr optstep
+    INTEGER         shift and go to state 93
 
-    dimitem                        shift and go to state 96
 
 state 61
 
-    (51) dimitem -> IDENT ( . size )
-    (52) size -> . INTEGER _3_0x2c_INTEGER_repeat
-    INTEGER         shift and go to state 98
+    (20) command -> IF relexpr THEN . command
+    (21) command -> IF relexpr THEN . expr
+    (9) command -> . DIM dimlist
+    (10) command -> . RETURN
+    (11) command -> . GOSUB INTEGER
+    (12) command -> . DEF FN ( exprlist ) = expr
+    (13) command -> . INPUT IDENT
+    (14) command -> . RESTORE
+    (15) command -> . STOP
+    (16) command -> . REM
+    (17) command -> . END
+    (18) command -> . NEXT IDENT
+    (19) command -> . FOR IDENT = INTEGER TO expr optstep
+    (20) command -> . IF relexpr THEN command
+    (21) command -> . IF relexpr THEN expr
+    (22) command -> . GOTO INTEGER
+    (23) command -> . PRINT plist
+    (24) command -> . DATA plist
+    (25) command -> . READ exprlist
+    (26) command -> . LET variable = expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    DIM             shift and go to state 10
+    RETURN          shift and go to state 11
+    GOSUB           shift and go to state 12
+    DEF             shift and go to state 13
+    INPUT           shift and go to state 14
+    RESTORE         shift and go to state 15
+    STOP            shift and go to state 16
+    REM             shift and go to state 17
+    END             shift and go to state 18
+    NEXT            shift and go to state 19
+    FOR             shift and go to state 20
+    IF              shift and go to state 21
+    GOTO            shift and go to state 22
+    PRINT           shift and go to state 23
+    DATA            shift and go to state 24
+    READ            shift and go to state 25
+    LET             shift and go to state 26
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    size                           shift and go to state 97
+    command                        shift and go to state 94
+    expr                           shift and go to state 95
+    variable                       shift and go to state 42
 
 state 62
 
-    (11) command -> DEF FN ( . varlist ) = expr
-    (58) varlist -> . variable _4_0x2c_variable_repeat
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    IDENT           shift and go to state 43
+    (39) relexpr -> expr NE . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    varlist                        shift and go to state 99
-    variable                       shift and go to state 55
+    expr                           shift and go to state 96
+    variable                       shift and go to state 42
 
 state 63
 
-    (18) command -> FOR IDENT = . INTEGER TO expr optstep
-    INTEGER         shift and go to state 100
+    (40) relexpr -> expr = . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    expr                           shift and go to state 97
+    variable                       shift and go to state 42
 
 state 64
 
-    (19) command -> IF relexpr THEN . INTEGER
-    INTEGER         shift and go to state 101
+    (41) relexpr -> expr GE . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    expr                           shift and go to state 98
+    variable                       shift and go to state 42
 
 state 65
 
-    (36) relexpr -> expr NE . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (42) relexpr -> expr GT . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 102
-    variable                       shift and go to state 41
+    expr                           shift and go to state 99
+    variable                       shift and go to state 42
 
 state 66
 
-    (37) relexpr -> expr = . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (43) relexpr -> expr LE . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 103
-    variable                       shift and go to state 41
+    expr                           shift and go to state 100
+    variable                       shift and go to state 42
 
 state 67
 
-    (38) relexpr -> expr GE . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (44) relexpr -> expr LT . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 104
-    variable                       shift and go to state 41
+    expr                           shift and go to state 101
+    variable                       shift and go to state 42
 
 state 68
 
-    (39) relexpr -> expr GT . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (34) expr -> expr ^ . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 105
-    variable                       shift and go to state 41
+    expr                           shift and go to state 102
+    variable                       shift and go to state 42
 
 state 69
 
-    (40) relexpr -> expr LE . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (35) expr -> expr / . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 106
-    variable                       shift and go to state 41
+    expr                           shift and go to state 103
+    variable                       shift and go to state 42
 
 state 70
 
-    (41) relexpr -> expr LT . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (36) expr -> expr * . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 107
-    variable                       shift and go to state 41
+    expr                           shift and go to state 104
+    variable                       shift and go to state 42
 
 state 71
 
-    (31) expr -> expr ^ . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (37) expr -> expr - . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 108
-    variable                       shift and go to state 41
+    expr                           shift and go to state 105
+    variable                       shift and go to state 42
 
 state 72
 
-    (32) expr -> expr / . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (38) expr -> expr + . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 109
-    variable                       shift and go to state 41
+    expr                           shift and go to state 106
+    variable                       shift and go to state 42
 
 state 73
 
-    (33) expr -> expr * . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (27) expr -> - expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    NE              reduce using rule 27 (expr -> - expr .)
+    =               reduce using rule 27 (expr -> - expr .)
+    GE              reduce using rule 27 (expr -> - expr .)
+    GT              reduce using rule 27 (expr -> - expr .)
+    LE              reduce using rule 27 (expr -> - expr .)
+    LT              reduce using rule 27 (expr -> - expr .)
+    ^               reduce using rule 27 (expr -> - expr .)
+    /               reduce using rule 27 (expr -> - expr .)
+    *               reduce using rule 27 (expr -> - expr .)
+    -               reduce using rule 27 (expr -> - expr .)
+    +               reduce using rule 27 (expr -> - expr .)
+    ;               reduce using rule 27 (expr -> - expr .)
+    ,               reduce using rule 27 (expr -> - expr .)
+    :               reduce using rule 27 (expr -> - expr .)
+    INTEGER         reduce using rule 27 (expr -> - expr .)
+    $end            reduce using rule 27 (expr -> - expr .)
+    )               reduce using rule 27 (expr -> - expr .)
+    THEN            reduce using rule 27 (expr -> - expr .)
+    STEP            reduce using rule 27 (expr -> - expr .)
 
-    expr                           shift and go to state 110
-    variable                       shift and go to state 41
 
 state 74
 
-    (34) expr -> expr - . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (28) expr -> ( expr . )
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    )               shift and go to state 107
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
-    expr                           shift and go to state 111
-    variable                       shift and go to state 41
 
 state 75
 
-    (35) expr -> expr + . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (29) expr -> FUNCTIONS ( . exprlist )
+    (62) exprlist -> . expr _4_0x2c_expr_repeat
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    expr                           shift and go to state 112
-    variable                       shift and go to state 41
+    exprlist                       shift and go to state 108
+    expr                           shift and go to state 52
+    variable                       shift and go to state 42
 
 state 76
 
-    (25) expr -> - expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    NE              reduce using rule 25 (expr -> - expr .)
-    =               reduce using rule 25 (expr -> - expr .)
-    GE              reduce using rule 25 (expr -> - expr .)
-    GT              reduce using rule 25 (expr -> - expr .)
-    LE              reduce using rule 25 (expr -> - expr .)
-    LT              reduce using rule 25 (expr -> - expr .)
-    ^               reduce using rule 25 (expr -> - expr .)
-    /               reduce using rule 25 (expr -> - expr .)
-    *               reduce using rule 25 (expr -> - expr .)
-    -               reduce using rule 25 (expr -> - expr .)
-    +               reduce using rule 25 (expr -> - expr .)
-    )               reduce using rule 25 (expr -> - expr .)
-    THEN            reduce using rule 25 (expr -> - expr .)
-    INTEGER         reduce using rule 25 (expr -> - expr .)
-    $end            reduce using rule 25 (expr -> - expr .)
-    STEP            reduce using rule 25 (expr -> - expr .)
+    (45) variable -> IDENT ( . INTEGER , INTEGER )
+    (46) variable -> IDENT ( . IDENT )
+    (47) variable -> IDENT ( . INTEGER )
+    INTEGER         shift and go to state 110
+    IDENT           shift and go to state 109
 
 
 state 77
 
-    (26) expr -> ( expr . )
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    )               shift and go to state 113
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (68) plist -> expr _5_optend_expr_repeat .
+    :               reduce using rule 68 (plist -> expr _5_optend_expr_repeat .)
+    INTEGER         reduce using rule 68 (plist -> expr _5_optend_expr_repeat .)
+    $end            reduce using rule 68 (plist -> expr _5_optend_expr_repeat .)
 
 
 state 78
 
-    (27) expr -> FUNCTIONS ( . funcValue )
-    (74) funcValue -> . variable
-    (75) funcValue -> . FLOAT
-    (76) funcValue -> . INTEGER
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    FLOAT           shift and go to state 116
-    INTEGER         shift and go to state 117
-    IDENT           shift and go to state 43
+    (69) _5_optend_expr_repeat -> _5_optend_expr_items .
+    (71) _5_optend_expr_items -> _5_optend_expr_items . _5_optend_expr_item
+    (73) _5_optend_expr_item -> . optend expr
+    (74) optend -> . ;
+    (75) optend -> . ,
+    :               reduce using rule 69 (_5_optend_expr_repeat -> _5_optend_expr_items .)
+    INTEGER         reduce using rule 69 (_5_optend_expr_repeat -> _5_optend_expr_items .)
+    $end            reduce using rule 69 (_5_optend_expr_repeat -> _5_optend_expr_items .)
+    ;               shift and go to state 81
+    ,               shift and go to state 82
 
-    funcValue                      shift and go to state 114
-    variable                       shift and go to state 115
+    _5_optend_expr_item            shift and go to state 111
+    optend                         shift and go to state 80
 
 state 79
 
-    (42) variable -> IDENT ( . INTEGER , INTEGER )
-    (43) variable -> IDENT ( . INTEGER )
-    INTEGER         shift and go to state 118
+    (72) _5_optend_expr_items -> _5_optend_expr_item .
+    ;               reduce using rule 72 (_5_optend_expr_items -> _5_optend_expr_item .)
+    ,               reduce using rule 72 (_5_optend_expr_items -> _5_optend_expr_item .)
+    :               reduce using rule 72 (_5_optend_expr_items -> _5_optend_expr_item .)
+    INTEGER         reduce using rule 72 (_5_optend_expr_items -> _5_optend_expr_item .)
+    $end            reduce using rule 72 (_5_optend_expr_items -> _5_optend_expr_item .)
 
 
 state 80
 
-    (77) plist -> pitem _6_0x2c_pitem_repeat .
-    INTEGER         reduce using rule 77 (plist -> pitem _6_0x2c_pitem_repeat .)
-    $end            reduce using rule 77 (plist -> pitem _6_0x2c_pitem_repeat .)
+    (73) _5_optend_expr_item -> optend . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    expr                           shift and go to state 112
+    variable                       shift and go to state 42
 
 state 81
 
-    (78) _6_0x2c_pitem_repeat -> _6_0x2c_pitem_items .
-    (80) _6_0x2c_pitem_items -> _6_0x2c_pitem_items . _6_0x2c_pitem_item
-    (82) _6_0x2c_pitem_item -> . , pitem
-    INTEGER         reduce using rule 78 (_6_0x2c_pitem_repeat -> _6_0x2c_pitem_items .)
-    $end            reduce using rule 78 (_6_0x2c_pitem_repeat -> _6_0x2c_pitem_items .)
-    ,               shift and go to state 83
+    (74) optend -> ; .
+    -               reduce using rule 74 (optend -> ; .)
+    (               reduce using rule 74 (optend -> ; .)
+    FUNCTIONS       reduce using rule 74 (optend -> ; .)
+    STRING          reduce using rule 74 (optend -> ; .)
+    FLOAT           reduce using rule 74 (optend -> ; .)
+    INTEGER         reduce using rule 74 (optend -> ; .)
+    IDENT           reduce using rule 74 (optend -> ; .)
 
-    _6_0x2c_pitem_item             shift and go to state 119
 
 state 82
 
-    (81) _6_0x2c_pitem_items -> _6_0x2c_pitem_item .
-    ,               reduce using rule 81 (_6_0x2c_pitem_items -> _6_0x2c_pitem_item .)
-    INTEGER         reduce using rule 81 (_6_0x2c_pitem_items -> _6_0x2c_pitem_item .)
-    $end            reduce using rule 81 (_6_0x2c_pitem_items -> _6_0x2c_pitem_item .)
+    (75) optend -> , .
+    -               reduce using rule 75 (optend -> , .)
+    (               reduce using rule 75 (optend -> , .)
+    FUNCTIONS       reduce using rule 75 (optend -> , .)
+    STRING          reduce using rule 75 (optend -> , .)
+    FLOAT           reduce using rule 75 (optend -> , .)
+    INTEGER         reduce using rule 75 (optend -> , .)
+    IDENT           reduce using rule 75 (optend -> , .)
 
 
 state 83
 
-    (82) _6_0x2c_pitem_item -> , . pitem
-    (83) pitem -> . variable
-    (84) pitem -> . STRING
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    STRING          shift and go to state 48
-    IDENT           shift and go to state 43
+    (62) exprlist -> expr _4_0x2c_expr_repeat .
+    :               reduce using rule 62 (exprlist -> expr _4_0x2c_expr_repeat .)
+    INTEGER         reduce using rule 62 (exprlist -> expr _4_0x2c_expr_repeat .)
+    $end            reduce using rule 62 (exprlist -> expr _4_0x2c_expr_repeat .)
+    )               reduce using rule 62 (exprlist -> expr _4_0x2c_expr_repeat .)
 
-    pitem                          shift and go to state 120
-    variable                       shift and go to state 47
 
 state 84
 
-    (64) numlist -> number _5_0x2c_number_repeat .
-    INTEGER         reduce using rule 64 (numlist -> number _5_0x2c_number_repeat .)
-    $end            reduce using rule 64 (numlist -> number _5_0x2c_number_repeat .)
+    (63) _4_0x2c_expr_repeat -> _4_0x2c_expr_items .
+    (65) _4_0x2c_expr_items -> _4_0x2c_expr_items . _4_0x2c_expr_item
+    (67) _4_0x2c_expr_item -> . , expr
+    :               reduce using rule 63 (_4_0x2c_expr_repeat -> _4_0x2c_expr_items .)
+    INTEGER         reduce using rule 63 (_4_0x2c_expr_repeat -> _4_0x2c_expr_items .)
+    $end            reduce using rule 63 (_4_0x2c_expr_repeat -> _4_0x2c_expr_items .)
+    )               reduce using rule 63 (_4_0x2c_expr_repeat -> _4_0x2c_expr_items .)
+    ,               shift and go to state 86
 
+    _4_0x2c_expr_item              shift and go to state 113
 
 state 85
 
-    (65) _5_0x2c_number_repeat -> _5_0x2c_number_items .
-    (67) _5_0x2c_number_items -> _5_0x2c_number_items . _5_0x2c_number_item
-    (69) _5_0x2c_number_item -> . , number
-    INTEGER         reduce using rule 65 (_5_0x2c_number_repeat -> _5_0x2c_number_items .)
-    $end            reduce using rule 65 (_5_0x2c_number_repeat -> _5_0x2c_number_items .)
-    ,               shift and go to state 87
+    (66) _4_0x2c_expr_items -> _4_0x2c_expr_item .
+    ,               reduce using rule 66 (_4_0x2c_expr_items -> _4_0x2c_expr_item .)
+    :               reduce using rule 66 (_4_0x2c_expr_items -> _4_0x2c_expr_item .)
+    INTEGER         reduce using rule 66 (_4_0x2c_expr_items -> _4_0x2c_expr_item .)
+    $end            reduce using rule 66 (_4_0x2c_expr_items -> _4_0x2c_expr_item .)
+    )               reduce using rule 66 (_4_0x2c_expr_items -> _4_0x2c_expr_item .)
 
-    _5_0x2c_number_item            shift and go to state 121
 
 state 86
 
-    (68) _5_0x2c_number_items -> _5_0x2c_number_item .
-    ,               reduce using rule 68 (_5_0x2c_number_items -> _5_0x2c_number_item .)
-    INTEGER         reduce using rule 68 (_5_0x2c_number_items -> _5_0x2c_number_item .)
-    $end            reduce using rule 68 (_5_0x2c_number_items -> _5_0x2c_number_item .)
+    (67) _4_0x2c_expr_item -> , . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    expr                           shift and go to state 114
+    variable                       shift and go to state 42
 
 state 87
 
-    (69) _5_0x2c_number_item -> , . number
-    (70) number -> . - FLOAT
-    (71) number -> . - INTEGER
-    (72) number -> . FLOAT
-    (73) number -> . INTEGER
-    -               shift and go to state 51
-    FLOAT           shift and go to state 52
-    INTEGER         shift and go to state 53
+    (26) command -> LET variable = . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
-    number                         shift and go to state 122
+    variable                       shift and go to state 42
+    expr                           shift and go to state 115
 
 state 88
 
-    (70) number -> - FLOAT .
-    ,               reduce using rule 70 (number -> - FLOAT .)
-    INTEGER         reduce using rule 70 (number -> - FLOAT .)
-    $end            reduce using rule 70 (number -> - FLOAT .)
+    (52) _2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item .
+    ,               reduce using rule 52 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item .)
+    :               reduce using rule 52 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item .)
+    INTEGER         reduce using rule 52 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item .)
+    $end            reduce using rule 52 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item .)
 
 
 state 89
 
-    (71) number -> - INTEGER .
-    ,               reduce using rule 71 (number -> - INTEGER .)
-    INTEGER         reduce using rule 71 (number -> - INTEGER .)
-    $end            reduce using rule 71 (number -> - INTEGER .)
+    (54) _2_0x2c_dimitem_item -> , dimitem .
+    ,               reduce using rule 54 (_2_0x2c_dimitem_item -> , dimitem .)
+    :               reduce using rule 54 (_2_0x2c_dimitem_item -> , dimitem .)
+    INTEGER         reduce using rule 54 (_2_0x2c_dimitem_item -> , dimitem .)
+    $end            reduce using rule 54 (_2_0x2c_dimitem_item -> , dimitem .)
 
 
 state 90
 
-    (58) varlist -> variable _4_0x2c_variable_repeat .
-    INTEGER         reduce using rule 58 (varlist -> variable _4_0x2c_variable_repeat .)
-    $end            reduce using rule 58 (varlist -> variable _4_0x2c_variable_repeat .)
-    )               reduce using rule 58 (varlist -> variable _4_0x2c_variable_repeat .)
+    (55) dimitem -> IDENT ( size . )
+    )               shift and go to state 116
 
 
 state 91
 
-    (59) _4_0x2c_variable_repeat -> _4_0x2c_variable_items .
-    (61) _4_0x2c_variable_items -> _4_0x2c_variable_items . _4_0x2c_variable_item
-    (63) _4_0x2c_variable_item -> . , variable
-    INTEGER         reduce using rule 59 (_4_0x2c_variable_repeat -> _4_0x2c_variable_items .)
-    $end            reduce using rule 59 (_4_0x2c_variable_repeat -> _4_0x2c_variable_items .)
-    )               reduce using rule 59 (_4_0x2c_variable_repeat -> _4_0x2c_variable_items .)
-    ,               shift and go to state 93
+    (56) size -> INTEGER . _3_0x2c_INTEGER_repeat
+    (57) _3_0x2c_INTEGER_repeat -> . _3_0x2c_INTEGER_items
+    (58) _3_0x2c_INTEGER_repeat -> .
+    (59) _3_0x2c_INTEGER_items -> . _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item
+    (60) _3_0x2c_INTEGER_items -> . _3_0x2c_INTEGER_item
+    (61) _3_0x2c_INTEGER_item -> . , INTEGER
+    )               reduce using rule 58 (_3_0x2c_INTEGER_repeat -> .)
+    ,               shift and go to state 120
 
-    _4_0x2c_variable_item          shift and go to state 123
+    _3_0x2c_INTEGER_repeat         shift and go to state 117
+    _3_0x2c_INTEGER_items          shift and go to state 118
+    _3_0x2c_INTEGER_item           shift and go to state 119
 
 state 92
 
-    (62) _4_0x2c_variable_items -> _4_0x2c_variable_item .
-    ,               reduce using rule 62 (_4_0x2c_variable_items -> _4_0x2c_variable_item .)
-    INTEGER         reduce using rule 62 (_4_0x2c_variable_items -> _4_0x2c_variable_item .)
-    $end            reduce using rule 62 (_4_0x2c_variable_items -> _4_0x2c_variable_item .)
-    )               reduce using rule 62 (_4_0x2c_variable_items -> _4_0x2c_variable_item .)
+    (12) command -> DEF FN ( exprlist . ) = expr
+    )               shift and go to state 121
 
 
 state 93
 
-    (63) _4_0x2c_variable_item -> , . variable
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    IDENT           shift and go to state 43
+    (19) command -> FOR IDENT = INTEGER . TO expr optstep
+    TO              shift and go to state 122
 
-    variable                       shift and go to state 124
 
 state 94
 
-    (24) command -> LET variable = . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (20) command -> IF relexpr THEN command .
+    :               reduce using rule 20 (command -> IF relexpr THEN command .)
+    INTEGER         reduce using rule 20 (command -> IF relexpr THEN command .)
+    $end            reduce using rule 20 (command -> IF relexpr THEN command .)
 
-    variable                       shift and go to state 41
-    expr                           shift and go to state 125
 
 state 95
 
-    (48) _2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item .
-    ,               reduce using rule 48 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item .)
-    INTEGER         reduce using rule 48 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item .)
-    $end            reduce using rule 48 (_2_0x2c_dimitem_items -> _2_0x2c_dimitem_items _2_0x2c_dimitem_item .)
+    (21) command -> IF relexpr THEN expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    :               reduce using rule 21 (command -> IF relexpr THEN expr .)
+    INTEGER         reduce using rule 21 (command -> IF relexpr THEN expr .)
+    $end            reduce using rule 21 (command -> IF relexpr THEN expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
 
 state 96
 
-    (50) _2_0x2c_dimitem_item -> , dimitem .
-    ,               reduce using rule 50 (_2_0x2c_dimitem_item -> , dimitem .)
-    INTEGER         reduce using rule 50 (_2_0x2c_dimitem_item -> , dimitem .)
-    $end            reduce using rule 50 (_2_0x2c_dimitem_item -> , dimitem .)
+    (39) relexpr -> expr NE expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    THEN            reduce using rule 39 (relexpr -> expr NE expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
 
 state 97
 
-    (51) dimitem -> IDENT ( size . )
-    )               shift and go to state 126
+    (40) relexpr -> expr = expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    THEN            reduce using rule 40 (relexpr -> expr = expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
 
 state 98
 
-    (52) size -> INTEGER . _3_0x2c_INTEGER_repeat
-    (53) _3_0x2c_INTEGER_repeat -> . _3_0x2c_INTEGER_items
-    (54) _3_0x2c_INTEGER_repeat -> .
-    (55) _3_0x2c_INTEGER_items -> . _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item
-    (56) _3_0x2c_INTEGER_items -> . _3_0x2c_INTEGER_item
-    (57) _3_0x2c_INTEGER_item -> . , INTEGER
-    )               reduce using rule 54 (_3_0x2c_INTEGER_repeat -> .)
-    ,               shift and go to state 130
+    (41) relexpr -> expr GE expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    THEN            reduce using rule 41 (relexpr -> expr GE expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
-    _3_0x2c_INTEGER_repeat         shift and go to state 127
-    _3_0x2c_INTEGER_items          shift and go to state 128
-    _3_0x2c_INTEGER_item           shift and go to state 129
 
 state 99
 
-    (11) command -> DEF FN ( varlist . ) = expr
-    )               shift and go to state 131
+    (42) relexpr -> expr GT expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    THEN            reduce using rule 42 (relexpr -> expr GT expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
 
 state 100
 
-    (18) command -> FOR IDENT = INTEGER . TO expr optstep
-    TO              shift and go to state 132
+    (43) relexpr -> expr LE expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    THEN            reduce using rule 43 (relexpr -> expr LE expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
 
 state 101
 
-    (19) command -> IF relexpr THEN INTEGER .
-    INTEGER         reduce using rule 19 (command -> IF relexpr THEN INTEGER .)
-    $end            reduce using rule 19 (command -> IF relexpr THEN INTEGER .)
+    (44) relexpr -> expr LT expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    THEN            reduce using rule 44 (relexpr -> expr LT expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
 
 state 102
 
-    (36) relexpr -> expr NE expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    THEN            reduce using rule 36 (relexpr -> expr NE expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (34) expr -> expr ^ expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    NE              reduce using rule 34 (expr -> expr ^ expr .)
+    =               reduce using rule 34 (expr -> expr ^ expr .)
+    GE              reduce using rule 34 (expr -> expr ^ expr .)
+    GT              reduce using rule 34 (expr -> expr ^ expr .)
+    LE              reduce using rule 34 (expr -> expr ^ expr .)
+    LT              reduce using rule 34 (expr -> expr ^ expr .)
+    ^               reduce using rule 34 (expr -> expr ^ expr .)
+    /               reduce using rule 34 (expr -> expr ^ expr .)
+    *               reduce using rule 34 (expr -> expr ^ expr .)
+    -               reduce using rule 34 (expr -> expr ^ expr .)
+    +               reduce using rule 34 (expr -> expr ^ expr .)
+    ;               reduce using rule 34 (expr -> expr ^ expr .)
+    ,               reduce using rule 34 (expr -> expr ^ expr .)
+    :               reduce using rule 34 (expr -> expr ^ expr .)
+    INTEGER         reduce using rule 34 (expr -> expr ^ expr .)
+    $end            reduce using rule 34 (expr -> expr ^ expr .)
+    )               reduce using rule 34 (expr -> expr ^ expr .)
+    THEN            reduce using rule 34 (expr -> expr ^ expr .)
+    STEP            reduce using rule 34 (expr -> expr ^ expr .)
 
 
 state 103
 
-    (37) relexpr -> expr = expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    THEN            reduce using rule 37 (relexpr -> expr = expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (35) expr -> expr / expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    NE              reduce using rule 35 (expr -> expr / expr .)
+    =               reduce using rule 35 (expr -> expr / expr .)
+    GE              reduce using rule 35 (expr -> expr / expr .)
+    GT              reduce using rule 35 (expr -> expr / expr .)
+    LE              reduce using rule 35 (expr -> expr / expr .)
+    LT              reduce using rule 35 (expr -> expr / expr .)
+    /               reduce using rule 35 (expr -> expr / expr .)
+    *               reduce using rule 35 (expr -> expr / expr .)
+    -               reduce using rule 35 (expr -> expr / expr .)
+    +               reduce using rule 35 (expr -> expr / expr .)
+    ;               reduce using rule 35 (expr -> expr / expr .)
+    ,               reduce using rule 35 (expr -> expr / expr .)
+    :               reduce using rule 35 (expr -> expr / expr .)
+    INTEGER         reduce using rule 35 (expr -> expr / expr .)
+    $end            reduce using rule 35 (expr -> expr / expr .)
+    )               reduce using rule 35 (expr -> expr / expr .)
+    THEN            reduce using rule 35 (expr -> expr / expr .)
+    STEP            reduce using rule 35 (expr -> expr / expr .)
+    ^               shift and go to state 68
 
 
 state 104
 
-    (38) relexpr -> expr GE expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    THEN            reduce using rule 38 (relexpr -> expr GE expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (36) expr -> expr * expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    NE              reduce using rule 36 (expr -> expr * expr .)
+    =               reduce using rule 36 (expr -> expr * expr .)
+    GE              reduce using rule 36 (expr -> expr * expr .)
+    GT              reduce using rule 36 (expr -> expr * expr .)
+    LE              reduce using rule 36 (expr -> expr * expr .)
+    LT              reduce using rule 36 (expr -> expr * expr .)
+    /               reduce using rule 36 (expr -> expr * expr .)
+    *               reduce using rule 36 (expr -> expr * expr .)
+    -               reduce using rule 36 (expr -> expr * expr .)
+    +               reduce using rule 36 (expr -> expr * expr .)
+    ;               reduce using rule 36 (expr -> expr * expr .)
+    ,               reduce using rule 36 (expr -> expr * expr .)
+    :               reduce using rule 36 (expr -> expr * expr .)
+    INTEGER         reduce using rule 36 (expr -> expr * expr .)
+    $end            reduce using rule 36 (expr -> expr * expr .)
+    )               reduce using rule 36 (expr -> expr * expr .)
+    THEN            reduce using rule 36 (expr -> expr * expr .)
+    STEP            reduce using rule 36 (expr -> expr * expr .)
+    ^               shift and go to state 68
 
 
 state 105
 
-    (39) relexpr -> expr GT expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    THEN            reduce using rule 39 (relexpr -> expr GT expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (37) expr -> expr - expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    NE              reduce using rule 37 (expr -> expr - expr .)
+    =               reduce using rule 37 (expr -> expr - expr .)
+    GE              reduce using rule 37 (expr -> expr - expr .)
+    GT              reduce using rule 37 (expr -> expr - expr .)
+    LE              reduce using rule 37 (expr -> expr - expr .)
+    LT              reduce using rule 37 (expr -> expr - expr .)
+    -               reduce using rule 37 (expr -> expr - expr .)
+    +               reduce using rule 37 (expr -> expr - expr .)
+    ;               reduce using rule 37 (expr -> expr - expr .)
+    ,               reduce using rule 37 (expr -> expr - expr .)
+    :               reduce using rule 37 (expr -> expr - expr .)
+    INTEGER         reduce using rule 37 (expr -> expr - expr .)
+    $end            reduce using rule 37 (expr -> expr - expr .)
+    )               reduce using rule 37 (expr -> expr - expr .)
+    THEN            reduce using rule 37 (expr -> expr - expr .)
+    STEP            reduce using rule 37 (expr -> expr - expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
 
 
 state 106
 
-    (40) relexpr -> expr LE expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    THEN            reduce using rule 40 (relexpr -> expr LE expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (38) expr -> expr + expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    NE              reduce using rule 38 (expr -> expr + expr .)
+    =               reduce using rule 38 (expr -> expr + expr .)
+    GE              reduce using rule 38 (expr -> expr + expr .)
+    GT              reduce using rule 38 (expr -> expr + expr .)
+    LE              reduce using rule 38 (expr -> expr + expr .)
+    LT              reduce using rule 38 (expr -> expr + expr .)
+    -               reduce using rule 38 (expr -> expr + expr .)
+    +               reduce using rule 38 (expr -> expr + expr .)
+    ;               reduce using rule 38 (expr -> expr + expr .)
+    ,               reduce using rule 38 (expr -> expr + expr .)
+    :               reduce using rule 38 (expr -> expr + expr .)
+    INTEGER         reduce using rule 38 (expr -> expr + expr .)
+    $end            reduce using rule 38 (expr -> expr + expr .)
+    )               reduce using rule 38 (expr -> expr + expr .)
+    THEN            reduce using rule 38 (expr -> expr + expr .)
+    STEP            reduce using rule 38 (expr -> expr + expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
 
 
 state 107
 
-    (41) relexpr -> expr LT expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    THEN            reduce using rule 41 (relexpr -> expr LT expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (28) expr -> ( expr ) .
+    NE              reduce using rule 28 (expr -> ( expr ) .)
+    =               reduce using rule 28 (expr -> ( expr ) .)
+    GE              reduce using rule 28 (expr -> ( expr ) .)
+    GT              reduce using rule 28 (expr -> ( expr ) .)
+    LE              reduce using rule 28 (expr -> ( expr ) .)
+    LT              reduce using rule 28 (expr -> ( expr ) .)
+    ^               reduce using rule 28 (expr -> ( expr ) .)
+    /               reduce using rule 28 (expr -> ( expr ) .)
+    *               reduce using rule 28 (expr -> ( expr ) .)
+    -               reduce using rule 28 (expr -> ( expr ) .)
+    +               reduce using rule 28 (expr -> ( expr ) .)
+    ;               reduce using rule 28 (expr -> ( expr ) .)
+    ,               reduce using rule 28 (expr -> ( expr ) .)
+    :               reduce using rule 28 (expr -> ( expr ) .)
+    INTEGER         reduce using rule 28 (expr -> ( expr ) .)
+    $end            reduce using rule 28 (expr -> ( expr ) .)
+    )               reduce using rule 28 (expr -> ( expr ) .)
+    THEN            reduce using rule 28 (expr -> ( expr ) .)
+    STEP            reduce using rule 28 (expr -> ( expr ) .)
 
 
 state 108
 
-    (31) expr -> expr ^ expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    NE              reduce using rule 31 (expr -> expr ^ expr .)
-    =               reduce using rule 31 (expr -> expr ^ expr .)
-    GE              reduce using rule 31 (expr -> expr ^ expr .)
-    GT              reduce using rule 31 (expr -> expr ^ expr .)
-    LE              reduce using rule 31 (expr -> expr ^ expr .)
-    LT              reduce using rule 31 (expr -> expr ^ expr .)
-    ^               reduce using rule 31 (expr -> expr ^ expr .)
-    /               reduce using rule 31 (expr -> expr ^ expr .)
-    *               reduce using rule 31 (expr -> expr ^ expr .)
-    -               reduce using rule 31 (expr -> expr ^ expr .)
-    +               reduce using rule 31 (expr -> expr ^ expr .)
-    )               reduce using rule 31 (expr -> expr ^ expr .)
-    THEN            reduce using rule 31 (expr -> expr ^ expr .)
-    INTEGER         reduce using rule 31 (expr -> expr ^ expr .)
-    $end            reduce using rule 31 (expr -> expr ^ expr .)
-    STEP            reduce using rule 31 (expr -> expr ^ expr .)
+    (29) expr -> FUNCTIONS ( exprlist . )
+    )               shift and go to state 123
 
 
 state 109
 
-    (32) expr -> expr / expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    NE              reduce using rule 32 (expr -> expr / expr .)
-    =               reduce using rule 32 (expr -> expr / expr .)
-    GE              reduce using rule 32 (expr -> expr / expr .)
-    GT              reduce using rule 32 (expr -> expr / expr .)
-    LE              reduce using rule 32 (expr -> expr / expr .)
-    LT              reduce using rule 32 (expr -> expr / expr .)
-    /               reduce using rule 32 (expr -> expr / expr .)
-    *               reduce using rule 32 (expr -> expr / expr .)
-    -               reduce using rule 32 (expr -> expr / expr .)
-    +               reduce using rule 32 (expr -> expr / expr .)
-    )               reduce using rule 32 (expr -> expr / expr .)
-    THEN            reduce using rule 32 (expr -> expr / expr .)
-    INTEGER         reduce using rule 32 (expr -> expr / expr .)
-    $end            reduce using rule 32 (expr -> expr / expr .)
-    STEP            reduce using rule 32 (expr -> expr / expr .)
-    ^               shift and go to state 71
+    (46) variable -> IDENT ( IDENT . )
+    )               shift and go to state 124
 
 
 state 110
 
-    (33) expr -> expr * expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    NE              reduce using rule 33 (expr -> expr * expr .)
-    =               reduce using rule 33 (expr -> expr * expr .)
-    GE              reduce using rule 33 (expr -> expr * expr .)
-    GT              reduce using rule 33 (expr -> expr * expr .)
-    LE              reduce using rule 33 (expr -> expr * expr .)
-    LT              reduce using rule 33 (expr -> expr * expr .)
-    /               reduce using rule 33 (expr -> expr * expr .)
-    *               reduce using rule 33 (expr -> expr * expr .)
-    -               reduce using rule 33 (expr -> expr * expr .)
-    +               reduce using rule 33 (expr -> expr * expr .)
-    )               reduce using rule 33 (expr -> expr * expr .)
-    THEN            reduce using rule 33 (expr -> expr * expr .)
-    INTEGER         reduce using rule 33 (expr -> expr * expr .)
-    $end            reduce using rule 33 (expr -> expr * expr .)
-    STEP            reduce using rule 33 (expr -> expr * expr .)
-    ^               shift and go to state 71
+    (45) variable -> IDENT ( INTEGER . , INTEGER )
+    (47) variable -> IDENT ( INTEGER . )
+    ,               shift and go to state 125
+    )               shift and go to state 126
 
 
 state 111
 
-    (34) expr -> expr - expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    NE              reduce using rule 34 (expr -> expr - expr .)
-    =               reduce using rule 34 (expr -> expr - expr .)
-    GE              reduce using rule 34 (expr -> expr - expr .)
-    GT              reduce using rule 34 (expr -> expr - expr .)
-    LE              reduce using rule 34 (expr -> expr - expr .)
-    LT              reduce using rule 34 (expr -> expr - expr .)
-    -               reduce using rule 34 (expr -> expr - expr .)
-    +               reduce using rule 34 (expr -> expr - expr .)
-    )               reduce using rule 34 (expr -> expr - expr .)
-    THEN            reduce using rule 34 (expr -> expr - expr .)
-    INTEGER         reduce using rule 34 (expr -> expr - expr .)
-    $end            reduce using rule 34 (expr -> expr - expr .)
-    STEP            reduce using rule 34 (expr -> expr - expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
+    (71) _5_optend_expr_items -> _5_optend_expr_items _5_optend_expr_item .
+    ;               reduce using rule 71 (_5_optend_expr_items -> _5_optend_expr_items _5_optend_expr_item .)
+    ,               reduce using rule 71 (_5_optend_expr_items -> _5_optend_expr_items _5_optend_expr_item .)
+    :               reduce using rule 71 (_5_optend_expr_items -> _5_optend_expr_items _5_optend_expr_item .)
+    INTEGER         reduce using rule 71 (_5_optend_expr_items -> _5_optend_expr_items _5_optend_expr_item .)
+    $end            reduce using rule 71 (_5_optend_expr_items -> _5_optend_expr_items _5_optend_expr_item .)
 
 
 state 112
 
-    (35) expr -> expr + expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    NE              reduce using rule 35 (expr -> expr + expr .)
-    =               reduce using rule 35 (expr -> expr + expr .)
-    GE              reduce using rule 35 (expr -> expr + expr .)
-    GT              reduce using rule 35 (expr -> expr + expr .)
-    LE              reduce using rule 35 (expr -> expr + expr .)
-    LT              reduce using rule 35 (expr -> expr + expr .)
-    -               reduce using rule 35 (expr -> expr + expr .)
-    +               reduce using rule 35 (expr -> expr + expr .)
-    )               reduce using rule 35 (expr -> expr + expr .)
-    THEN            reduce using rule 35 (expr -> expr + expr .)
-    INTEGER         reduce using rule 35 (expr -> expr + expr .)
-    $end            reduce using rule 35 (expr -> expr + expr .)
-    STEP            reduce using rule 35 (expr -> expr + expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
+    (73) _5_optend_expr_item -> optend expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    ;               reduce using rule 73 (_5_optend_expr_item -> optend expr .)
+    ,               reduce using rule 73 (_5_optend_expr_item -> optend expr .)
+    :               reduce using rule 73 (_5_optend_expr_item -> optend expr .)
+    INTEGER         reduce using rule 73 (_5_optend_expr_item -> optend expr .)
+    $end            reduce using rule 73 (_5_optend_expr_item -> optend expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
 
 state 113
 
-    (26) expr -> ( expr ) .
-    NE              reduce using rule 26 (expr -> ( expr ) .)
-    =               reduce using rule 26 (expr -> ( expr ) .)
-    GE              reduce using rule 26 (expr -> ( expr ) .)
-    GT              reduce using rule 26 (expr -> ( expr ) .)
-    LE              reduce using rule 26 (expr -> ( expr ) .)
-    LT              reduce using rule 26 (expr -> ( expr ) .)
-    ^               reduce using rule 26 (expr -> ( expr ) .)
-    /               reduce using rule 26 (expr -> ( expr ) .)
-    *               reduce using rule 26 (expr -> ( expr ) .)
-    -               reduce using rule 26 (expr -> ( expr ) .)
-    +               reduce using rule 26 (expr -> ( expr ) .)
-    )               reduce using rule 26 (expr -> ( expr ) .)
-    THEN            reduce using rule 26 (expr -> ( expr ) .)
-    INTEGER         reduce using rule 26 (expr -> ( expr ) .)
-    $end            reduce using rule 26 (expr -> ( expr ) .)
-    STEP            reduce using rule 26 (expr -> ( expr ) .)
+    (65) _4_0x2c_expr_items -> _4_0x2c_expr_items _4_0x2c_expr_item .
+    ,               reduce using rule 65 (_4_0x2c_expr_items -> _4_0x2c_expr_items _4_0x2c_expr_item .)
+    :               reduce using rule 65 (_4_0x2c_expr_items -> _4_0x2c_expr_items _4_0x2c_expr_item .)
+    INTEGER         reduce using rule 65 (_4_0x2c_expr_items -> _4_0x2c_expr_items _4_0x2c_expr_item .)
+    $end            reduce using rule 65 (_4_0x2c_expr_items -> _4_0x2c_expr_items _4_0x2c_expr_item .)
+    )               reduce using rule 65 (_4_0x2c_expr_items -> _4_0x2c_expr_items _4_0x2c_expr_item .)
 
 
 state 114
 
-    (27) expr -> FUNCTIONS ( funcValue . )
-    )               shift and go to state 133
+    (67) _4_0x2c_expr_item -> , expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    ,               reduce using rule 67 (_4_0x2c_expr_item -> , expr .)
+    :               reduce using rule 67 (_4_0x2c_expr_item -> , expr .)
+    INTEGER         reduce using rule 67 (_4_0x2c_expr_item -> , expr .)
+    $end            reduce using rule 67 (_4_0x2c_expr_item -> , expr .)
+    )               reduce using rule 67 (_4_0x2c_expr_item -> , expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
 
 state 115
 
-    (74) funcValue -> variable .
-    )               reduce using rule 74 (funcValue -> variable .)
+    (26) command -> LET variable = expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    :               reduce using rule 26 (command -> LET variable = expr .)
+    INTEGER         reduce using rule 26 (command -> LET variable = expr .)
+    $end            reduce using rule 26 (command -> LET variable = expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
 
 state 116
 
-    (75) funcValue -> FLOAT .
-    )               reduce using rule 75 (funcValue -> FLOAT .)
+    (55) dimitem -> IDENT ( size ) .
+    ,               reduce using rule 55 (dimitem -> IDENT ( size ) .)
+    :               reduce using rule 55 (dimitem -> IDENT ( size ) .)
+    INTEGER         reduce using rule 55 (dimitem -> IDENT ( size ) .)
+    $end            reduce using rule 55 (dimitem -> IDENT ( size ) .)
 
 
 state 117
 
-    (76) funcValue -> INTEGER .
-    )               reduce using rule 76 (funcValue -> INTEGER .)
+    (56) size -> INTEGER _3_0x2c_INTEGER_repeat .
+    )               reduce using rule 56 (size -> INTEGER _3_0x2c_INTEGER_repeat .)
 
 
 state 118
 
-    (42) variable -> IDENT ( INTEGER . , INTEGER )
-    (43) variable -> IDENT ( INTEGER . )
-    ,               shift and go to state 134
-    )               shift and go to state 135
+    (57) _3_0x2c_INTEGER_repeat -> _3_0x2c_INTEGER_items .
+    (59) _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items . _3_0x2c_INTEGER_item
+    (61) _3_0x2c_INTEGER_item -> . , INTEGER
+    )               reduce using rule 57 (_3_0x2c_INTEGER_repeat -> _3_0x2c_INTEGER_items .)
+    ,               shift and go to state 120
 
+    _3_0x2c_INTEGER_item           shift and go to state 127
 
 state 119
 
-    (80) _6_0x2c_pitem_items -> _6_0x2c_pitem_items _6_0x2c_pitem_item .
-    ,               reduce using rule 80 (_6_0x2c_pitem_items -> _6_0x2c_pitem_items _6_0x2c_pitem_item .)
-    INTEGER         reduce using rule 80 (_6_0x2c_pitem_items -> _6_0x2c_pitem_items _6_0x2c_pitem_item .)
-    $end            reduce using rule 80 (_6_0x2c_pitem_items -> _6_0x2c_pitem_items _6_0x2c_pitem_item .)
+    (60) _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_item .
+    ,               reduce using rule 60 (_3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_item .)
+    )               reduce using rule 60 (_3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_item .)
 
 
 state 120
 
-    (82) _6_0x2c_pitem_item -> , pitem .
-    ,               reduce using rule 82 (_6_0x2c_pitem_item -> , pitem .)
-    INTEGER         reduce using rule 82 (_6_0x2c_pitem_item -> , pitem .)
-    $end            reduce using rule 82 (_6_0x2c_pitem_item -> , pitem .)
+    (61) _3_0x2c_INTEGER_item -> , . INTEGER
+    INTEGER         shift and go to state 128
 
 
 state 121
 
-    (67) _5_0x2c_number_items -> _5_0x2c_number_items _5_0x2c_number_item .
-    ,               reduce using rule 67 (_5_0x2c_number_items -> _5_0x2c_number_items _5_0x2c_number_item .)
-    INTEGER         reduce using rule 67 (_5_0x2c_number_items -> _5_0x2c_number_items _5_0x2c_number_item .)
-    $end            reduce using rule 67 (_5_0x2c_number_items -> _5_0x2c_number_items _5_0x2c_number_item .)
+    (12) command -> DEF FN ( exprlist ) . = expr
+    =               shift and go to state 129
 
 
 state 122
 
-    (69) _5_0x2c_number_item -> , number .
-    ,               reduce using rule 69 (_5_0x2c_number_item -> , number .)
-    INTEGER         reduce using rule 69 (_5_0x2c_number_item -> , number .)
-    $end            reduce using rule 69 (_5_0x2c_number_item -> , number .)
+    (19) command -> FOR IDENT = INTEGER TO . expr optstep
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    expr                           shift and go to state 130
+    variable                       shift and go to state 42
 
 state 123
 
-    (61) _4_0x2c_variable_items -> _4_0x2c_variable_items _4_0x2c_variable_item .
-    ,               reduce using rule 61 (_4_0x2c_variable_items -> _4_0x2c_variable_items _4_0x2c_variable_item .)
-    INTEGER         reduce using rule 61 (_4_0x2c_variable_items -> _4_0x2c_variable_items _4_0x2c_variable_item .)
-    $end            reduce using rule 61 (_4_0x2c_variable_items -> _4_0x2c_variable_items _4_0x2c_variable_item .)
-    )               reduce using rule 61 (_4_0x2c_variable_items -> _4_0x2c_variable_items _4_0x2c_variable_item .)
+    (29) expr -> FUNCTIONS ( exprlist ) .
+    NE              reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    =               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    GE              reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    GT              reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    LE              reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    LT              reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    ^               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    /               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    *               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    -               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    +               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    ;               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    ,               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    :               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    INTEGER         reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    $end            reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    )               reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    THEN            reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
+    STEP            reduce using rule 29 (expr -> FUNCTIONS ( exprlist ) .)
 
 
 state 124
 
-    (63) _4_0x2c_variable_item -> , variable .
-    ,               reduce using rule 63 (_4_0x2c_variable_item -> , variable .)
-    INTEGER         reduce using rule 63 (_4_0x2c_variable_item -> , variable .)
-    $end            reduce using rule 63 (_4_0x2c_variable_item -> , variable .)
-    )               reduce using rule 63 (_4_0x2c_variable_item -> , variable .)
+    (46) variable -> IDENT ( IDENT ) .
+    NE              reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    =               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    GE              reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    GT              reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    LE              reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    LT              reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    ^               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    /               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    *               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    -               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    +               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    ;               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    ,               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    :               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    INTEGER         reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    $end            reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    )               reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    THEN            reduce using rule 46 (variable -> IDENT ( IDENT ) .)
+    STEP            reduce using rule 46 (variable -> IDENT ( IDENT ) .)
 
 
 state 125
 
-    (24) command -> LET variable = expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    INTEGER         reduce using rule 24 (command -> LET variable = expr .)
-    $end            reduce using rule 24 (command -> LET variable = expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (45) variable -> IDENT ( INTEGER , . INTEGER )
+    INTEGER         shift and go to state 131
 
 
 state 126
 
-    (51) dimitem -> IDENT ( size ) .
-    ,               reduce using rule 51 (dimitem -> IDENT ( size ) .)
-    INTEGER         reduce using rule 51 (dimitem -> IDENT ( size ) .)
-    $end            reduce using rule 51 (dimitem -> IDENT ( size ) .)
+    (47) variable -> IDENT ( INTEGER ) .
+    NE              reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    =               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    GE              reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    GT              reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    LE              reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    LT              reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    ^               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    /               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    *               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    -               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    +               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    ;               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    ,               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    :               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    INTEGER         reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    $end            reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    )               reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    THEN            reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
+    STEP            reduce using rule 47 (variable -> IDENT ( INTEGER ) .)
 
 
 state 127
 
-    (52) size -> INTEGER _3_0x2c_INTEGER_repeat .
-    )               reduce using rule 52 (size -> INTEGER _3_0x2c_INTEGER_repeat .)
+    (59) _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item .
+    ,               reduce using rule 59 (_3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item .)
+    )               reduce using rule 59 (_3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item .)
 
 
 state 128
 
-    (53) _3_0x2c_INTEGER_repeat -> _3_0x2c_INTEGER_items .
-    (55) _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items . _3_0x2c_INTEGER_item
-    (57) _3_0x2c_INTEGER_item -> . , INTEGER
-    )               reduce using rule 53 (_3_0x2c_INTEGER_repeat -> _3_0x2c_INTEGER_items .)
-    ,               shift and go to state 130
+    (61) _3_0x2c_INTEGER_item -> , INTEGER .
+    ,               reduce using rule 61 (_3_0x2c_INTEGER_item -> , INTEGER .)
+    )               reduce using rule 61 (_3_0x2c_INTEGER_item -> , INTEGER .)
 
-    _3_0x2c_INTEGER_item           shift and go to state 136
 
 state 129
 
-    (56) _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_item .
-    ,               reduce using rule 56 (_3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_item .)
-    )               reduce using rule 56 (_3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_item .)
+    (12) command -> DEF FN ( exprlist ) = . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    expr                           shift and go to state 132
+    variable                       shift and go to state 42
 
 state 130
 
-    (57) _3_0x2c_INTEGER_item -> , . INTEGER
-    INTEGER         shift and go to state 137
+    (19) command -> FOR IDENT = INTEGER TO expr . optstep
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    (76) optstep -> . empty
+    (77) optstep -> . STEP expr
+    (78) empty -> .
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
+    STEP            shift and go to state 135
+    :               reduce using rule 78 (empty -> .)
+    INTEGER         reduce using rule 78 (empty -> .)
+    $end            reduce using rule 78 (empty -> .)
 
+    optstep                        shift and go to state 133
+    empty                          shift and go to state 134
 
 state 131
 
-    (11) command -> DEF FN ( varlist ) . = expr
-    =               shift and go to state 138
+    (45) variable -> IDENT ( INTEGER , INTEGER . )
+    )               shift and go to state 136
 
 
 state 132
 
-    (18) command -> FOR IDENT = INTEGER TO . expr optstep
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
+    (12) command -> DEF FN ( exprlist ) = expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    :               reduce using rule 12 (command -> DEF FN ( exprlist ) = expr .)
+    INTEGER         reduce using rule 12 (command -> DEF FN ( exprlist ) = expr .)
+    $end            reduce using rule 12 (command -> DEF FN ( exprlist ) = expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
 
-    expr                           shift and go to state 139
-    variable                       shift and go to state 41
 
 state 133
 
-    (27) expr -> FUNCTIONS ( funcValue ) .
-    NE              reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    =               reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    GE              reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    GT              reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    LE              reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    LT              reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    ^               reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    /               reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    *               reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    -               reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    +               reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    )               reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    THEN            reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    INTEGER         reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    $end            reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
-    STEP            reduce using rule 27 (expr -> FUNCTIONS ( funcValue ) .)
+    (19) command -> FOR IDENT = INTEGER TO expr optstep .
+    :               reduce using rule 19 (command -> FOR IDENT = INTEGER TO expr optstep .)
+    INTEGER         reduce using rule 19 (command -> FOR IDENT = INTEGER TO expr optstep .)
+    $end            reduce using rule 19 (command -> FOR IDENT = INTEGER TO expr optstep .)
 
 
 state 134
 
-    (42) variable -> IDENT ( INTEGER , . INTEGER )
-    INTEGER         shift and go to state 140
+    (76) optstep -> empty .
+    :               reduce using rule 76 (optstep -> empty .)
+    INTEGER         reduce using rule 76 (optstep -> empty .)
+    $end            reduce using rule 76 (optstep -> empty .)
 
 
 state 135
 
-    (43) variable -> IDENT ( INTEGER ) .
-    NE              reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    =               reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    GE              reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    GT              reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    LE              reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    LT              reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    ^               reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    /               reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    *               reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    -               reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    +               reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    ,               reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    INTEGER         reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    $end            reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    )               reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    THEN            reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
-    STEP            reduce using rule 43 (variable -> IDENT ( INTEGER ) .)
+    (77) optstep -> STEP . expr
+    (27) expr -> . - expr
+    (28) expr -> . ( expr )
+    (29) expr -> . FUNCTIONS ( exprlist )
+    (30) expr -> . variable
+    (31) expr -> . STRING
+    (32) expr -> . FLOAT
+    (33) expr -> . INTEGER
+    (34) expr -> . expr ^ expr
+    (35) expr -> . expr / expr
+    (36) expr -> . expr * expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (45) variable -> . IDENT ( INTEGER , INTEGER )
+    (46) variable -> . IDENT ( IDENT )
+    (47) variable -> . IDENT ( INTEGER )
+    (48) variable -> . IDENT
+    -               shift and go to state 39
+    (               shift and go to state 40
+    FUNCTIONS       shift and go to state 41
+    STRING          shift and go to state 43
+    FLOAT           shift and go to state 44
+    INTEGER         shift and go to state 45
+    IDENT           shift and go to state 46
 
+    expr                           shift and go to state 137
+    variable                       shift and go to state 42
 
 state 136
 
-    (55) _3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item .
-    ,               reduce using rule 55 (_3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item .)
-    )               reduce using rule 55 (_3_0x2c_INTEGER_items -> _3_0x2c_INTEGER_items _3_0x2c_INTEGER_item .)
+    (45) variable -> IDENT ( INTEGER , INTEGER ) .
+    NE              reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    =               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    GE              reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    GT              reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    LE              reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    LT              reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    ^               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    /               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    *               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    -               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    +               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    ;               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    ,               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    :               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    INTEGER         reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    $end            reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    )               reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    THEN            reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
+    STEP            reduce using rule 45 (variable -> IDENT ( INTEGER , INTEGER ) .)
 
 
 state 137
 
-    (57) _3_0x2c_INTEGER_item -> , INTEGER .
-    ,               reduce using rule 57 (_3_0x2c_INTEGER_item -> , INTEGER .)
-    )               reduce using rule 57 (_3_0x2c_INTEGER_item -> , INTEGER .)
-
-
-state 138
-
-    (11) command -> DEF FN ( varlist ) = . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
-
-    expr                           shift and go to state 141
-    variable                       shift and go to state 41
-
-state 139
-
-    (18) command -> FOR IDENT = INTEGER TO expr . optstep
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    (85) optstep -> . empty
-    (86) optstep -> . STEP expr
-    (87) empty -> .
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
-    STEP            shift and go to state 144
-    INTEGER         reduce using rule 87 (empty -> .)
-    $end            reduce using rule 87 (empty -> .)
-
-    optstep                        shift and go to state 142
-    empty                          shift and go to state 143
-
-state 140
-
-    (42) variable -> IDENT ( INTEGER , INTEGER . )
-    )               shift and go to state 145
-
-
-state 141
-
-    (11) command -> DEF FN ( varlist ) = expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    INTEGER         reduce using rule 11 (command -> DEF FN ( varlist ) = expr .)
-    $end            reduce using rule 11 (command -> DEF FN ( varlist ) = expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
-
-
-state 142
-
-    (18) command -> FOR IDENT = INTEGER TO expr optstep .
-    INTEGER         reduce using rule 18 (command -> FOR IDENT = INTEGER TO expr optstep .)
-    $end            reduce using rule 18 (command -> FOR IDENT = INTEGER TO expr optstep .)
-
-
-state 143
-
-    (85) optstep -> empty .
-    INTEGER         reduce using rule 85 (optstep -> empty .)
-    $end            reduce using rule 85 (optstep -> empty .)
-
-
-state 144
-
-    (86) optstep -> STEP . expr
-    (25) expr -> . - expr
-    (26) expr -> . ( expr )
-    (27) expr -> . FUNCTIONS ( funcValue )
-    (28) expr -> . variable
-    (29) expr -> . FLOAT
-    (30) expr -> . INTEGER
-    (31) expr -> . expr ^ expr
-    (32) expr -> . expr / expr
-    (33) expr -> . expr * expr
-    (34) expr -> . expr - expr
-    (35) expr -> . expr + expr
-    (42) variable -> . IDENT ( INTEGER , INTEGER )
-    (43) variable -> . IDENT ( INTEGER )
-    (44) variable -> . IDENT
-    -               shift and go to state 38
-    (               shift and go to state 39
-    FUNCTIONS       shift and go to state 40
-    FLOAT           shift and go to state 42
-    INTEGER         shift and go to state 36
-    IDENT           shift and go to state 43
-
-    expr                           shift and go to state 146
-    variable                       shift and go to state 41
-
-state 145
-
-    (42) variable -> IDENT ( INTEGER , INTEGER ) .
-    NE              reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    =               reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    GE              reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    GT              reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    LE              reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    LT              reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    ^               reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    /               reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    *               reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    -               reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    +               reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    ,               reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    INTEGER         reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    $end            reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    )               reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    THEN            reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-    STEP            reduce using rule 42 (variable -> IDENT ( INTEGER , INTEGER ) .)
-
-
-state 146
-
-    (86) optstep -> STEP expr .
-    (31) expr -> expr . ^ expr
-    (32) expr -> expr . / expr
-    (33) expr -> expr . * expr
-    (34) expr -> expr . - expr
-    (35) expr -> expr . + expr
-    INTEGER         reduce using rule 86 (optstep -> STEP expr .)
-    $end            reduce using rule 86 (optstep -> STEP expr .)
-    ^               shift and go to state 71
-    /               shift and go to state 72
-    *               shift and go to state 73
-    -               shift and go to state 74
-    +               shift and go to state 75
+    (77) optstep -> STEP expr .
+    (34) expr -> expr . ^ expr
+    (35) expr -> expr . / expr
+    (36) expr -> expr . * expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    :               reduce using rule 77 (optstep -> STEP expr .)
+    INTEGER         reduce using rule 77 (optstep -> STEP expr .)
+    $end            reduce using rule 77 (optstep -> STEP expr .)
+    ^               shift and go to state 68
+    /               shift and go to state 69
+    *               shift and go to state 70
+    -               shift and go to state 71
+    +               shift and go to state 72
