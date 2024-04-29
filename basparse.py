@@ -39,10 +39,14 @@ class Parser(sly.Parser):
     @_("LET variable '=' expr")
     def command(self, p):
         return Let(p.variable, p.expr)
+
+    @_("IDENT")
+    def variable(self, p):
+        return p.IDENT
     
-    @_("READ exprlist")
-    def command(self, p):
-        return Read(p.exprlist)
+    @_("array")
+    def variable(self, p):
+        return p.array
 
     @_("DATA plist")
     def command(self, p):
@@ -88,13 +92,17 @@ class Parser(sly.Parser):
     def command(self, p):
         return Restore()
 
-    @_("INPUT IDENT")
+    @_("INPUT varlist")
     def command(self, p):
-        return Input(Variable(p.IDENT))
+        return Input(None, Variable(p.varlist))
 
-    @_("DEF FN '(' exprlist ')' '=' expr")
+    @_("IDENT { ',' IDENT }")
+    def varlist(self, p):
+        return ([ p.IDENT0 ] + p.IDENT1)
+
+    @_("DEF FN FN_DIM_NAME '(' exprlist ')' '=' expr")
     def command(self, p):
-        return DefFunction(p.FN, p.exprlist, p.expr)
+        return DefFunction(p.FN_DIM_NAME, p.exprlist, p.expr)
 
     @_("GOSUB INTEGER")
     def command(self, p):
@@ -104,9 +112,37 @@ class Parser(sly.Parser):
     def command(self, p):
         return Return()
 
-    @_("DIM dimlist")
+    @_("READ varItem { ',' varItem }")
     def command(self, p):
-        return Dim(p.dimlist)
+        return Read([ p.varItem0 ] + p.varItem1 )
+    
+    @_("array")
+    def varItem(self, p):
+        return [p.array]
+
+    @_("IDENT")
+    def varItem(self, p):
+        return [p.IDENT]
+
+    @_("DIM array { ',' array }")
+    def command(self, p):
+        return Dim([ p.array0 ] + p.array1)
+    
+    @_("IDENT '(' arrayItem ')'")
+    def array(self, p):
+        return Array(p.IDENT, p.arrayItem, None)
+
+    @_("IDENT '(' arrayItem ',' arrayItem ')'")
+    def array(self, p):
+        return Array(p.IDENT, p.arrayItem0, p.arrayItem1)
+    
+    @_("IDENT")
+    def arrayItem(self, p):
+        return p.IDENT
+    
+    @_("INTEGER")
+    def arrayItem(self, p):
+        return p.INTEGER
 
     #-----------------------------------------
     @_("expr '+' expr",
@@ -128,10 +164,10 @@ class Parser(sly.Parser):
     @_("STRING")
     def expr(self, p):
         return String(p.STRING)
-
+    
     @_("variable")
     def expr(self, p):
-        return Variable(p.variable)
+        return String(p.variable)
 
     @_("FUNCTIONS '(' exprlist ')'")
     def expr(self, p):
@@ -153,34 +189,6 @@ class Parser(sly.Parser):
        "expr NE expr")
     def relexpr(self, p):
         return Logical(p[1], p.expr0, p.expr1)
-
-    @_("IDENT")
-    def variable(self, p):
-        return Variable(p.IDENT)
-
-    @_("IDENT '(' INTEGER ')'")
-    def variable(self, p):
-        return Array(p.IDENT, p.INTEGER)
-    
-    @_("IDENT '(' IDENT ')'")
-    def variable(self, p):
-        return Array(p.IDENT0, p.IDENT1)
-
-    @_("IDENT '(' INTEGER ',' INTEGER ')'")
-    def variable(self, p):
-        return Array(p.IDENT, p.INTEGER0, p.INTEGER1)
-
-    @_("dimitem { ',' dimitem }")
-    def dimlist(self, p):
-        return DimList([ p.dimitem0 ] + p.dimitem1)
-
-    @_("IDENT '(' size ')'")
-    def dimitem(self, p):
-        return DimItem(p.IDENT, p.size)
-
-    @_("INTEGER { ',' INTEGER }")
-    def size(self, p):
-        return [p.INTEGER0] + p.INTEGER1
 
     @_("expr { ',' expr }")
     def exprlist(self, p):
@@ -210,17 +218,14 @@ class Parser(sly.Parser):
     def empty(self, p):
         pass
 
-    def error(self, p):
-        print(p.value)
-
 def test(txt):
     l = Lexer()
     p = Parser()
 
     top = p.parse(l.tokenize(txt))
     #dot, dotstr = DotRender.render(top)
-
-    print(print_ast_tree(top))
+    print(top)
+    #print(print_ast_tree(top))
 
 
 if __name__ == '__main__':

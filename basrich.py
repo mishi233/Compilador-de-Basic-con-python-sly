@@ -38,7 +38,9 @@ class RichASTVisitor:
         tree.add(f"Remark: {node.comment}")
 
     def visit_input(self, node: Input, tree: Tree):
-        tree.add(f"Input: {node.ident}")
+        tree.add(f"Label: {node.label}")
+        for variable in node.vlist:
+            variable.accept(self, tree)
 
     def visit_for(self, node: For, tree: Tree):
       for_tree = tree.add("[#00008B]For")
@@ -96,13 +98,15 @@ class RichASTVisitor:
 
     def visit_dim(self, node: Dim, tree: Tree):
         dim_tree = tree.add("[#00008B]Dim")
-        for expr in node.dim:
-            expr_tree = dim_tree.add("Expression")
-            expr.accept(self, expr_tree)
+        for array in node.dim:
+            if array:
+                dim_tree.add(f"Array: {array}")
 
     def visit_array(self, node: Array, tree: Tree):
-        array_tree = tree.add(f"Array: {node.ident}")
-        array_tree.add(f"Dim1: {node.dim1}")
+        array_tree = tree.add(f"Array: {node.var}")
+        if node.dim1 is not None:
+            array_tree.add(f"Dim1: {node.dim1}")
+
         if node.dim2 is not None:
             array_tree.add(f"Dim2: {node.dim2}")
 
@@ -126,6 +130,9 @@ class RichASTVisitor:
     
     def visit_fn(self, node: DefFunction, tree: Tree):
         fn_tree = tree.add(f"[#00008B]FN: {node.name}")
+        for argument in node.arguments:
+            argument_tree = fn_tree.add("Argument")
+            argument.accept(self, argument_tree)
         expr_tree = fn_tree.add("Expression")
         node.expresion.accept(self, expr_tree)
 
@@ -231,7 +238,8 @@ def print_ast_tree(node: Node, label: str = "AST") -> Tree:
         tree.add(child)
     elif isinstance(node, Dim):
         child = Tree("Dim")
-        child.add(Tree(f"DimList: {node.dim}"))
+        for array in node.dim:
+            child.add(Tree(f"Array: {array}"))
         tree.add(child)
     elif isinstance(node, Read):
         child = Tree("Read")

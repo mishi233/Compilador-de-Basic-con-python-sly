@@ -1,76 +1,6 @@
 # basrender.py
-from abc import ABC, abstractmethod
 from graphviz import Digraph
 from basast   import *
-
-class Visitor(ABC):
-    @abstractmethod
-    def visit_Node(self, n: Node):
-        pass
-
-    @abstractmethod
-    def visit_Expression(self, n: Expression):
-        pass
-
-    @abstractmethod
-    def visit_Literal(self, n: Literal):
-        pass
-
-    @abstractmethod
-    def visit_String(self, n: String):
-        pass
-
-    @abstractmethod
-    def visit_Binary(self, n: Binary):
-        pass
-
-    @abstractmethod
-    def visit_Unary(self, n: Unary):
-        pass
-
-    @abstractmethod
-    def visit_Group(self, n: Group):
-        pass
-
-    @abstractmethod
-    def visit_Logical(self, n: Logical):
-        pass
-
-    @abstractmethod
-    def visit_Variable(self, n: Variable):
-        pass
-
-    @abstractmethod
-    def visit_Array(self, n: Array):
-        pass
-
-    @abstractmethod
-    def visit_Number(self, n: Number):
-        pass
-
-    @abstractmethod
-    def visit_DiscreteNumbers(self, n: DiscreteNumbers):
-        pass
-
-    @abstractmethod
-    def visit_Statement(self, n: Statement):
-        pass
-
-    @abstractmethod
-    def visit_Command(self, n: Command):
-        pass
-
-    @abstractmethod
-    def visit_Program(self, n: Program):
-        pass
-
-    @abstractmethod
-    def visit_Let(self, n: Let):
-        pass
-
-    @abstractmethod
-    def visit_Read(self, n: Read):
-        pass
 
 class DotRender(Visitor):
     node_default = {
@@ -166,12 +96,6 @@ class DotRender(Visitor):
         for dim_list in n.dim:
             self.dot.edge(name, dim_list.accept(self))
         return name
-
-    def visit_DimItem(self, n: DimItem):
-        name = self.name()
-        self.dot.node(name, label=f'DimItem\nName: {n.ident}')
-        return name
-
 
     def visit_DefFunction(self, n: DefFunction):
         name = self.name()
@@ -362,9 +286,6 @@ class ContentExtractor(Visitor):
         for dim_list in n.dim:
             content.append(dim_list.accept(self))
         return content
-
-    def visit_DimItem(self, n: DimItem):
-        return ['DimItem']
 
     def visit_DefFunction(self, n: DefFunction):
         content = ['Def Function']

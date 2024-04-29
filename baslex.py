@@ -20,7 +20,7 @@ class Lexer(sly.Lexer):
         IDENT, FN, FUNCTIONS,
 
         # constantes
-        INTEGER, FLOAT, STRING,
+        INTEGER, FLOAT, STRING, FN_DIM_NAME
     }
     literals = '+-*/^()=:,;'
 
@@ -133,10 +133,13 @@ class Lexer(sly.Lexer):
         t.value = t.value.upper()
         return t
 
+    @_(r'FN|fn')
+    def FN(self, t):
+        t.value = t.value.upper()
+        return t
     
     FUNCTIONS = r'SIN|sin|COS|cos|TAN|tan|ATN|atn|EXP|exp|ABS|abs|LOG|log|SQR|sqr|RND|rnd|INT|int|TAB|tab|DEG|deg|PI|pi|TIME|time|LEN|len|(LEFT|left|MID|mid|RIGHT|right)\$'
-    
-    FN    = r'FN[A-Z]|fn[A-Z]'
+
     IDENT = r'[A-Z][0-9]?\$?'
 
 
@@ -149,6 +152,7 @@ class Lexer(sly.Lexer):
     INTEGER = r'\d+'
     FLOAT   = r'(?:\d+(?:\.\d*)?|\.\d+)'
     STRING  = r'"[^"]*"?'
+    FN_DIM_NAME = r'[a-zA-Z]+'
 
     def error(self, t):
         print(f"Línea [yello]{t.lineno}[/yello]: [red]caracter ilegal '{t.value[0]}'[/red]")
@@ -163,11 +167,9 @@ def pprint(source):
         for line in source.splitlines():
             result += line +" "+"\n"
         return result
-    
 
     # Procesamos el archivo
     source_processed = procesar_archivo(source)
-    print(source_processed)
     lex = Lexer()
 
     table = Table(title='Análisis Léxico')

@@ -1,6 +1,7 @@
 # basast.py
 from dataclasses import dataclass
 from typing import List
+from abc import ABC, abstractmethod
 
 
 # =====================================================================
@@ -28,6 +29,12 @@ class String(Literal):
     value: str
     def accept(self, visitor):
         return visitor.visit_String(self)
+    
+@dataclass
+class FnDimName(Literal):
+    name: str
+    def accept(self, visitor):
+        return visitor.visit_FunctionName(self)
 
 @dataclass
 class Binary(Expression):
@@ -61,6 +68,7 @@ class Logical(Expression):
     
 @dataclass
 class Function(Expression):
+    name = FnDimName
     funcType: String
     exprList : List[Expression]
 
@@ -69,11 +77,24 @@ class Variable(Expression):
     ident: str
     def accept(self, visitor):
         return visitor.visit_Variable(self)
+    
+@dataclass
+class Varlist(Expression):
+    ident: Variable
+    def accept(self, visitor):
+        return visitor.visit_Varlist(self)
+
+@dataclass
+class DiscreteNumbers(Literal):
+    value: int
+    def accept(self, visitor):
+        return visitor.visit_DiscreteNumbers(self)
 
 @dataclass
 class Array(Expression):
-    ident: str
-    indices: tuple
+    var: str
+    dim1: DiscreteNumbers
+    dim2: DiscreteNumbers   
     def accept(self, visitor):
         return visitor.visit_Array(self)
 
@@ -83,17 +104,7 @@ class Number(Literal):
     def accept(self, visitor):
         return visitor.visit_Number(self)
 
-@dataclass
-class DiscreteNumbers(Literal):
-    value: int
-    def accept(self, visitor):
-        return visitor.visit_DiscreteNumbers(self)
-
-
-
 #Nodes
-
-
 @dataclass
 class Statement(Node):
     def accept(self, visitor):
@@ -148,9 +159,7 @@ class End(Statement):
 
 @dataclass
 class DefFunction(Statement):
-    name: String
-    arguments : List[Expression]
-    expresion : Expression
+    dim : List[FnDimName]
     def accept(self, visitor):
         return visitor.visit_DefFunction(self)
 
@@ -195,7 +204,8 @@ class Stop(Statement):
 
 @dataclass
 class Input(Statement):
-    ident: Variable
+    label: String
+    vlist: List[Variable]
     def accept(self, visitor):
         return visitor.visit_Input(self)
 
@@ -216,23 +226,77 @@ class Return(Statement):
         return visitor.visit_Return(self)
 
 @dataclass
-class DimItem(Expression):
-    ident: Variable
-    tam: List[DiscreteNumbers]
-    def accept(self, visitor):
-        return visitor.visit_DimItem(self)
-
-@dataclass
-class DimList(Expression):
-    dimItems : List[DimItem]
-    def accept(self, visitor):
-        return visitor.visit_DimList(self)
-        
-    def __iter__(self):
-        return iter(self.dimItems)
-
-@dataclass
 class Dim(Statement):
-    dim : List[DimList]
+    dim : List[Array]
     def accept(self, visitor):
         return visitor.visit_Dim(self)
+
+#CLASE VISITOR
+class Visitor(ABC):
+    @abstractmethod
+    def visit_Node(self, n: Node):
+        pass
+
+    @abstractmethod
+    def visit_Expression(self, n: Expression):
+        pass
+
+    @abstractmethod
+    def visit_Literal(self, n: Literal):
+        pass
+
+    @abstractmethod
+    def visit_String(self, n: String):
+        pass
+
+    @abstractmethod
+    def visit_Binary(self, n: Binary):
+        pass
+
+    @abstractmethod
+    def visit_Unary(self, n: Unary):
+        pass
+
+    @abstractmethod
+    def visit_Group(self, n: Group):
+        pass
+
+    @abstractmethod
+    def visit_Logical(self, n: Logical):
+        pass
+
+    @abstractmethod
+    def visit_Variable(self, n: Variable):
+        pass
+
+    @abstractmethod
+    def visit_Array(self, n: Array):
+        pass
+
+    @abstractmethod
+    def visit_Number(self, n: Number):
+        pass
+
+    @abstractmethod
+    def visit_DiscreteNumbers(self, n: DiscreteNumbers):
+        pass
+
+    @abstractmethod
+    def visit_Statement(self, n: Statement):
+        pass
+
+    @abstractmethod
+    def visit_Command(self, n: Command):
+        pass
+
+    @abstractmethod
+    def visit_Program(self, n: Program):
+        pass
+
+    @abstractmethod
+    def visit_Let(self, n: Let):
+        pass
+
+    @abstractmethod
+    def visit_Read(self, n: Read):
+        pass
