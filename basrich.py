@@ -168,7 +168,6 @@ def print_ast_tree(node: Node, label: str = "AST") -> Tree:
         tree.add(child)
     elif isinstance(node, Remark):
         tree.add(Tree(f"Remark: {node.comment}"))
-    
     elif isinstance(node, Data):
         child = Tree("Data")
         child.add(Tree(f"PList: {node.plist}"))
@@ -183,7 +182,7 @@ def print_ast_tree(node: Node, label: str = "AST") -> Tree:
         tree.add(child)
     elif isinstance(node, Input):
         child = Tree("Input")
-        child.add(Tree(f"Elements: {node.ident}"))
+        child.add(Tree(f"Elements: {node.vlist}"))
         tree.add(child)
     elif isinstance(node, For):
         child = Tree("For")

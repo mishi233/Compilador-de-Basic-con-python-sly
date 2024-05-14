@@ -75,17 +75,18 @@ Rule 71    _5_0x2c_expr_repeat -> <empty>
 Rule 72    _5_0x2c_expr_items -> _5_0x2c_expr_items _5_0x2c_expr_item
 Rule 73    _5_0x2c_expr_items -> _5_0x2c_expr_item
 Rule 74    _5_0x2c_expr_item -> , expr
-Rule 75    plist -> expr _6_optend_expr_repeat
-Rule 76    _6_optend_expr_repeat -> _6_optend_expr_items
-Rule 77    _6_optend_expr_repeat -> <empty>
-Rule 78    _6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item
-Rule 79    _6_optend_expr_items -> _6_optend_expr_item
-Rule 80    _6_optend_expr_item -> optend expr
-Rule 81    optend -> ;
-Rule 82    optend -> ,
-Rule 83    optstep -> empty
-Rule 84    optstep -> STEP expr
-Rule 85    empty -> <empty>
+Rule 75    plist -> expr
+Rule 76    plist -> expr _6_optend_expr_repeat
+Rule 77    _6_optend_expr_repeat -> _6_optend_expr_items
+Rule 78    _6_optend_expr_repeat -> <empty>
+Rule 79    _6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item
+Rule 80    _6_optend_expr_items -> _6_optend_expr_item
+Rule 81    _6_optend_expr_item -> optend expr
+Rule 82    optend -> ;
+Rule 83    optend -> ,
+Rule 84    optstep -> empty
+Rule 85    optstep -> STEP expr
+Rule 86    empty -> <empty>
 
 Terminals, with rules where they appear:
 
@@ -93,11 +94,11 @@ Terminals, with rules where they appear:
 )                    : 23 47 48 52 53
 *                    : 60
 +                    : 62
-,                    : 14 20 44 47 74 82
+,                    : 14 20 44 47 74 83
 -                    : 51 61
 /                    : 59
 :                    : 7
-;                    : 81
+;                    : 82
 =                    : 23 30 36 64
 DATA                 : 35
 DEF                  : 23
@@ -126,7 +127,7 @@ READ                 : 15
 REM                  : 27
 RESTORE              : 25
 RETURN               : 21
-STEP                 : 84
+STEP                 : 85
 STOP                 : 26
 STRING               : 55
 THEN                 : 31 32
@@ -151,16 +152,16 @@ _4_0x2c_IDENT_repeat : 39
 _5_0x2c_expr_item    : 72 73
 _5_0x2c_expr_items   : 70 72
 _5_0x2c_expr_repeat  : 69
-_6_optend_expr_item  : 78 79
-_6_optend_expr_items : 76 78
-_6_optend_expr_repeat : 75
+_6_optend_expr_item  : 79 80
+_6_optend_expr_items : 77 79
+_6_optend_expr_repeat : 76
 array                : 9 14 37 46
 arrayItem            : 47 47 48
 command              : 7 8 31
-empty                : 83
-expr                 : 23 30 32 36 51 52 58 58 59 59 60 60 61 61 62 62 63 63 64 64 65 65 66 66 67 67 68 68 69 74 75 80 84
+empty                : 84
+expr                 : 23 30 32 36 51 52 58 58 59 59 60 60 61 61 62 62 63 63 64 64 65 65 66 66 67 67 68 68 69 74 75 76 81 85
 exprlist             : 23 53
-optend               : 80
+optend               : 81
 optstep              : 30
 plist                : 34 35
 program              : 0
@@ -474,7 +475,8 @@ state 23
 state 24
 
     (34) command -> PRINT . plist
-    (75) plist -> . expr _6_optend_expr_repeat
+    (75) plist -> . expr
+    (76) plist -> . expr _6_optend_expr_repeat
     (51) expr -> . - expr
     (52) expr -> . ( expr )
     (53) expr -> . FUNCTIONS ( exprlist )
@@ -507,7 +509,8 @@ state 24
 state 25
 
     (35) command -> DATA . plist
-    (75) plist -> . expr _6_optend_expr_repeat
+    (75) plist -> . expr
+    (76) plist -> . expr _6_optend_expr_repeat
     (51) expr -> . - expr
     (52) expr -> . ( expr )
     (53) expr -> . FUNCTIONS ( exprlist )
@@ -946,27 +949,31 @@ state 52
 
 state 53
 
-    (75) plist -> expr . _6_optend_expr_repeat
+    (75) plist -> expr .
+    (76) plist -> expr . _6_optend_expr_repeat
     (58) expr -> expr . ^ expr
     (59) expr -> expr . / expr
     (60) expr -> expr . * expr
     (61) expr -> expr . - expr
     (62) expr -> expr . + expr
-    (76) _6_optend_expr_repeat -> . _6_optend_expr_items
-    (77) _6_optend_expr_repeat -> .
-    (78) _6_optend_expr_items -> . _6_optend_expr_items _6_optend_expr_item
-    (79) _6_optend_expr_items -> . _6_optend_expr_item
-    (80) _6_optend_expr_item -> . optend expr
-    (81) optend -> . ;
-    (82) optend -> . ,
+    (77) _6_optend_expr_repeat -> . _6_optend_expr_items
+    (78) _6_optend_expr_repeat -> .
+    (79) _6_optend_expr_items -> . _6_optend_expr_items _6_optend_expr_item
+    (80) _6_optend_expr_items -> . _6_optend_expr_item
+    (81) _6_optend_expr_item -> . optend expr
+    (82) optend -> . ;
+    (83) optend -> . ,
+  ! reduce/reduce conflict for : resolved using rule 75 (plist -> expr .)
+  ! reduce/reduce conflict for INTEGER resolved using rule 75 (plist -> expr .)
+  ! reduce/reduce conflict for $end resolved using rule 75 (plist -> expr .)
+    :               reduce using rule 75 (plist -> expr .)
+    INTEGER         reduce using rule 75 (plist -> expr .)
+    $end            reduce using rule 75 (plist -> expr .)
     ^               shift and go to state 78
     /               shift and go to state 79
     *               shift and go to state 80
     -               shift and go to state 81
     +               shift and go to state 82
-    :               reduce using rule 77 (_6_optend_expr_repeat -> .)
-    INTEGER         reduce using rule 77 (_6_optend_expr_repeat -> .)
-    $end            reduce using rule 77 (_6_optend_expr_repeat -> .)
     ;               shift and go to state 90
     ,               shift and go to state 91
 
@@ -1615,22 +1622,22 @@ state 85
 
 state 86
 
-    (75) plist -> expr _6_optend_expr_repeat .
-    :               reduce using rule 75 (plist -> expr _6_optend_expr_repeat .)
-    INTEGER         reduce using rule 75 (plist -> expr _6_optend_expr_repeat .)
-    $end            reduce using rule 75 (plist -> expr _6_optend_expr_repeat .)
+    (76) plist -> expr _6_optend_expr_repeat .
+    :               reduce using rule 76 (plist -> expr _6_optend_expr_repeat .)
+    INTEGER         reduce using rule 76 (plist -> expr _6_optend_expr_repeat .)
+    $end            reduce using rule 76 (plist -> expr _6_optend_expr_repeat .)
 
 
 state 87
 
-    (76) _6_optend_expr_repeat -> _6_optend_expr_items .
-    (78) _6_optend_expr_items -> _6_optend_expr_items . _6_optend_expr_item
-    (80) _6_optend_expr_item -> . optend expr
-    (81) optend -> . ;
-    (82) optend -> . ,
-    :               reduce using rule 76 (_6_optend_expr_repeat -> _6_optend_expr_items .)
-    INTEGER         reduce using rule 76 (_6_optend_expr_repeat -> _6_optend_expr_items .)
-    $end            reduce using rule 76 (_6_optend_expr_repeat -> _6_optend_expr_items .)
+    (77) _6_optend_expr_repeat -> _6_optend_expr_items .
+    (79) _6_optend_expr_items -> _6_optend_expr_items . _6_optend_expr_item
+    (81) _6_optend_expr_item -> . optend expr
+    (82) optend -> . ;
+    (83) optend -> . ,
+    :               reduce using rule 77 (_6_optend_expr_repeat -> _6_optend_expr_items .)
+    INTEGER         reduce using rule 77 (_6_optend_expr_repeat -> _6_optend_expr_items .)
+    $end            reduce using rule 77 (_6_optend_expr_repeat -> _6_optend_expr_items .)
     ;               shift and go to state 90
     ,               shift and go to state 91
 
@@ -1639,17 +1646,17 @@ state 87
 
 state 88
 
-    (79) _6_optend_expr_items -> _6_optend_expr_item .
-    ;               reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_item .)
-    ,               reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_item .)
-    :               reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_item .)
-    INTEGER         reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_item .)
-    $end            reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_item .)
+    (80) _6_optend_expr_items -> _6_optend_expr_item .
+    ;               reduce using rule 80 (_6_optend_expr_items -> _6_optend_expr_item .)
+    ,               reduce using rule 80 (_6_optend_expr_items -> _6_optend_expr_item .)
+    :               reduce using rule 80 (_6_optend_expr_items -> _6_optend_expr_item .)
+    INTEGER         reduce using rule 80 (_6_optend_expr_items -> _6_optend_expr_item .)
+    $end            reduce using rule 80 (_6_optend_expr_items -> _6_optend_expr_item .)
 
 
 state 89
 
-    (80) _6_optend_expr_item -> optend . expr
+    (81) _6_optend_expr_item -> optend . expr
     (51) expr -> . - expr
     (52) expr -> . ( expr )
     (53) expr -> . FUNCTIONS ( exprlist )
@@ -1680,26 +1687,26 @@ state 89
 
 state 90
 
-    (81) optend -> ; .
-    -               reduce using rule 81 (optend -> ; .)
-    (               reduce using rule 81 (optend -> ; .)
-    FUNCTIONS       reduce using rule 81 (optend -> ; .)
-    STRING          reduce using rule 81 (optend -> ; .)
-    FLOAT           reduce using rule 81 (optend -> ; .)
-    INTEGER         reduce using rule 81 (optend -> ; .)
-    IDENT           reduce using rule 81 (optend -> ; .)
+    (82) optend -> ; .
+    -               reduce using rule 82 (optend -> ; .)
+    (               reduce using rule 82 (optend -> ; .)
+    FUNCTIONS       reduce using rule 82 (optend -> ; .)
+    STRING          reduce using rule 82 (optend -> ; .)
+    FLOAT           reduce using rule 82 (optend -> ; .)
+    INTEGER         reduce using rule 82 (optend -> ; .)
+    IDENT           reduce using rule 82 (optend -> ; .)
 
 
 state 91
 
-    (82) optend -> , .
-    -               reduce using rule 82 (optend -> , .)
-    (               reduce using rule 82 (optend -> , .)
-    FUNCTIONS       reduce using rule 82 (optend -> , .)
-    STRING          reduce using rule 82 (optend -> , .)
-    FLOAT           reduce using rule 82 (optend -> , .)
-    INTEGER         reduce using rule 82 (optend -> , .)
-    IDENT           reduce using rule 82 (optend -> , .)
+    (83) optend -> , .
+    -               reduce using rule 83 (optend -> , .)
+    (               reduce using rule 83 (optend -> , .)
+    FUNCTIONS       reduce using rule 83 (optend -> , .)
+    STRING          reduce using rule 83 (optend -> , .)
+    FLOAT           reduce using rule 83 (optend -> , .)
+    INTEGER         reduce using rule 83 (optend -> , .)
+    IDENT           reduce using rule 83 (optend -> , .)
 
 
 state 92
@@ -2172,27 +2179,27 @@ state 119
 
 state 120
 
-    (78) _6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .
-    ;               reduce using rule 78 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
-    ,               reduce using rule 78 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
-    :               reduce using rule 78 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
-    INTEGER         reduce using rule 78 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
-    $end            reduce using rule 78 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
+    (79) _6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .
+    ;               reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
+    ,               reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
+    :               reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
+    INTEGER         reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
+    $end            reduce using rule 79 (_6_optend_expr_items -> _6_optend_expr_items _6_optend_expr_item .)
 
 
 state 121
 
-    (80) _6_optend_expr_item -> optend expr .
+    (81) _6_optend_expr_item -> optend expr .
     (58) expr -> expr . ^ expr
     (59) expr -> expr . / expr
     (60) expr -> expr . * expr
     (61) expr -> expr . - expr
     (62) expr -> expr . + expr
-    ;               reduce using rule 80 (_6_optend_expr_item -> optend expr .)
-    ,               reduce using rule 80 (_6_optend_expr_item -> optend expr .)
-    :               reduce using rule 80 (_6_optend_expr_item -> optend expr .)
-    INTEGER         reduce using rule 80 (_6_optend_expr_item -> optend expr .)
-    $end            reduce using rule 80 (_6_optend_expr_item -> optend expr .)
+    ;               reduce using rule 81 (_6_optend_expr_item -> optend expr .)
+    ,               reduce using rule 81 (_6_optend_expr_item -> optend expr .)
+    :               reduce using rule 81 (_6_optend_expr_item -> optend expr .)
+    INTEGER         reduce using rule 81 (_6_optend_expr_item -> optend expr .)
+    $end            reduce using rule 81 (_6_optend_expr_item -> optend expr .)
     ^               shift and go to state 78
     /               shift and go to state 79
     *               shift and go to state 80
@@ -2387,18 +2394,18 @@ state 134
     (60) expr -> expr . * expr
     (61) expr -> expr . - expr
     (62) expr -> expr . + expr
-    (83) optstep -> . empty
-    (84) optstep -> . STEP expr
-    (85) empty -> .
+    (84) optstep -> . empty
+    (85) optstep -> . STEP expr
+    (86) empty -> .
     ^               shift and go to state 78
     /               shift and go to state 79
     *               shift and go to state 80
     -               shift and go to state 81
     +               shift and go to state 82
     STEP            shift and go to state 141
-    :               reduce using rule 85 (empty -> .)
-    INTEGER         reduce using rule 85 (empty -> .)
-    $end            reduce using rule 85 (empty -> .)
+    :               reduce using rule 86 (empty -> .)
+    INTEGER         reduce using rule 86 (empty -> .)
+    $end            reduce using rule 86 (empty -> .)
 
     optstep                        shift and go to state 139
     empty                          shift and go to state 140
@@ -2492,15 +2499,15 @@ state 139
 
 state 140
 
-    (83) optstep -> empty .
-    :               reduce using rule 83 (optstep -> empty .)
-    INTEGER         reduce using rule 83 (optstep -> empty .)
-    $end            reduce using rule 83 (optstep -> empty .)
+    (84) optstep -> empty .
+    :               reduce using rule 84 (optstep -> empty .)
+    INTEGER         reduce using rule 84 (optstep -> empty .)
+    $end            reduce using rule 84 (optstep -> empty .)
 
 
 state 141
 
-    (84) optstep -> STEP . expr
+    (85) optstep -> STEP . expr
     (51) expr -> . - expr
     (52) expr -> . ( expr )
     (53) expr -> . FUNCTIONS ( exprlist )
@@ -2549,17 +2556,24 @@ state 142
 
 state 143
 
-    (84) optstep -> STEP expr .
+    (85) optstep -> STEP expr .
     (58) expr -> expr . ^ expr
     (59) expr -> expr . / expr
     (60) expr -> expr . * expr
     (61) expr -> expr . - expr
     (62) expr -> expr . + expr
-    :               reduce using rule 84 (optstep -> STEP expr .)
-    INTEGER         reduce using rule 84 (optstep -> STEP expr .)
-    $end            reduce using rule 84 (optstep -> STEP expr .)
+    :               reduce using rule 85 (optstep -> STEP expr .)
+    INTEGER         reduce using rule 85 (optstep -> STEP expr .)
+    $end            reduce using rule 85 (optstep -> STEP expr .)
     ^               shift and go to state 78
     /               shift and go to state 79
     *               shift and go to state 80
     -               shift and go to state 81
     +               shift and go to state 82
+
+
+Conflicts:
+
+reduce/reduce conflict in state 53 resolved using rule plist -> expr
+rejected rule (_6_optend_expr_repeat -> <empty>) in state 53
+Rule (_6_optend_expr_repeat -> <empty>) is never reduced

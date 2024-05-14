@@ -55,21 +55,28 @@ class DotRender(Visitor):
     def visit_Let(self, n: Let):
         name = self.name()
         self.dot.node(name, label='Let')
-        self.dot.edge(name, n.var.accept(self))
         self.dot.edge(name, n.expr.accept(self))
         return name
 
     def visit_Read(self, n: Read):
         name = self.name()
         self.dot.node(name, label='Read')
-        for var in n.varlist:
-            self.dot.edge(name, var.accept(self))
+        return name
+
+    def visit_Input(self, n: Input):
+        name = self.name()
+        self.dot.node(name, label='Input')
+        return name
+    
+    def visit_Restore(self, n: Input):
+        name = self.name()
+        self.dot.node(name, label='Input')
         return name
 
     def visit_Data(self, n: Data):
         name = self.name()
         self.dot.node(name, label='Data')
-        for num in n.numlist:
+        for num in n.plist:
             self.dot.edge(name, num.accept(self))
         return name
 
@@ -118,8 +125,9 @@ class DotRender(Visitor):
         self.dot.node(name, label=f'For\nVariable: {n.ident}')
         self.dot.edge(name, n.expr0.accept(self))
         self.dot.edge(name, n.expr1.accept(self))
-        self.dot.edge(name, n.optstep.accept(self))
-        self.dot.edge(name, f'Optest\nLine: {n.optstep.value}')
+        if n.optstep:
+            self.dot.edge(name, n.optstep.accept(self))
+            self.dot.edge(name, f'Optest\nLine: {n.optstep.value}')
         return name
 
     def visit_Next(self, n: Next):
@@ -131,7 +139,6 @@ class DotRender(Visitor):
         name = self.name()
         self.dot.node(name, label='End')
         return name
-
 
     def visit_Remark(self, n: Remark):
         name = self.name()
@@ -174,11 +181,7 @@ class DotRender(Visitor):
 
     def visit_Array(self, n: Array):
         name = self.name()
-        self.dot.node(name, label=f'Array\nName: {n.ident}')
-        for idx in n.indices:
-            idx_name = self.name()
-            self.dot.node(idx_name, label=f'Index: {idx}')
-            self.dot.edge(name, idx_name)
+        self.dot.node(name, label=f'Array\nVariable: {n.var}')
         return name
     
     ##-----
@@ -186,8 +189,8 @@ class DotRender(Visitor):
     def visit_Binary(self, n: Binary):
         name = self.name()
         self.dot.node(name, label=f'Binary\nOperator: {n.op}')
-        self.dot.edge(name, n.expr0.accept(self))
-        self.dot.edge(name, n.expr1.accept(self))
+        self.dot.edge(name, n.left.accept(self))
+        self.dot.edge(name, n.right.accept(self))
         return name
 
     def visit_DiscreteNumbers(self, n: DiscreteNumbers):
@@ -342,6 +345,11 @@ class ContentExtractor(Visitor):
 
     def visit_Array(self, n: Array):
         content = ['Array']
+        content.append(n.var.accept(self))
+        content.append(n.dim1.accept(self))
+        content.append(n.dim1.value)
+        content.append(n.dim2.accept(self))
+        content.append(n.dim2.value)
         return content
 
     def visit_Binary(self, n: Binary):

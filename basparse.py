@@ -94,7 +94,7 @@ class Parser(sly.Parser):
 
     @_("INPUT varlist")
     def command(self, p):
-        return Input(None, Variable(p.varlist))
+        return Input(p.varlist)
 
     @_("IDENT { ',' IDENT }")
     def varlist(self, p):
@@ -198,6 +198,10 @@ class Parser(sly.Parser):
     def plist(self, p):
         return [ p.expr0 ] + p.expr1
     
+    @_("expr")
+    def plist(self, p):
+        return [ p.expr ] 
+    
     @_("','")
     def optend(self, p):
         pass
@@ -222,8 +226,8 @@ def test(txt):
     l = Lexer()
     p = Parser()
 
-    top = p.parse(l.tokenize(txt))
-    #dot, dotstr = DotRender.render(top)
+    top =(p.parse(l.tokenize(txt)))
+
     print(top)
     #print(print_ast_tree(top))
 

@@ -1,5 +1,7 @@
 # coding: utf-8
 from rich import print
+from rich.table import Table
+from rich.console import Console
 import sly
 import re
 
@@ -158,31 +160,31 @@ class Lexer(sly.Lexer):
         print(f"Línea [yello]{t.lineno}[/yello]: [red]caracter ilegal '{t.value[0]}'[/red]")
         self.index += 1
 
-def pprint(source):
-    from rich.table import Table
-    from rich.console import Console
+    def pprint(self, source, output_file=None):
+            def procesar_archivo(source):
+                result = ""
+                for line in source.splitlines():
+                    result += line + " " + "\n"
+                return result
 
-    def procesar_archivo(source):
-        result = ""
-        for line in source.splitlines():
-            result += line +" "+"\n"
-        return result
+            # Procesamos el archivo
+            source_processed = procesar_archivo(source)
 
-    # Procesamos el archivo
-    source_processed = procesar_archivo(source)
-    lex = Lexer()
+            table = Table(title='Análisis Léxico')
+            table.add_column('type')
+            table.add_column('value')
+            table.add_column('lineno', justify='right')
 
-    table = Table(title='Análisis Léxico')
-    table.add_column('type')
-    table.add_column('value')
-    table.add_column('lineno', justify='right')
+            for tok in self.tokenize(source_processed):
+                value = tok.value if isinstance(tok.value, str) else str(tok.value)
+                table.add_row(tok.type, value, str(tok.lineno))
 
-    for tok in lex.tokenize(source_processed):
-        value = tok.value if isinstance(tok.value, str) else str(tok.value)
-        table.add_row(tok.type, value, str(tok.lineno))
+            if output_file:
+                with open(output_file, 'w') as f:
+                    f.write(table.render())
 
-    console = Console()
-    console.print(table)
+            console = Console()
+            console.print(table)
 
 
 if __name__ == '__main__':
@@ -192,5 +194,5 @@ if __name__ == '__main__':
         print('[red]usage: baslex.py filename[/red]')
         sys.exit(1)
 
-    pprint(open(sys.argv[1], encoding='utf-8').read())
-
+    lex = Lexer()
+    lex.pprint(open(sys.argv[1], encoding='utf-8').read())
