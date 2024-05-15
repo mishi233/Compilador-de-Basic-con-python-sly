@@ -41,11 +41,15 @@ class Interpreter(Visitor):
     self.segLinea = config['seguimientoPorLinea']
     self.numeroEspacios = config['numeroEspacios']
     self.printEnArchivo = config['escribir_print']
+    self.readDeArchivo = config['leer_archivo']
+    random.seed(config['semilla_random'])
+    self.corteDeCadena = config['corteDeCadena']
 
     if self.numeroEspacios < 0:
       print("NO SE PUEDE TENER UN ESPACIADO NEGATIVO")
       BasicExit()
 
+    
 
     self.functions = {           # Built-in function table
       'SIN': lambda x: math.sin(x),
@@ -58,7 +62,11 @@ class Interpreter(Visitor):
       'SQR': lambda x: math.sqrt(x),
       'INT': lambda x: int(x),
       'RND': lambda x: random.random(),
-      'TAB': lambda x: ' '*x
+      'TAB': lambda x: ' '*x,
+
+      'LEFT$': lambda cadena, x: cadena[:x],
+      'MID$': lambda cadena, x, y: cadena[x:y],
+      'RIGHT$': lambda cadena, x: cadena[x * -1:]
     }
 
   @classmethod
@@ -349,16 +357,22 @@ class Interpreter(Visitor):
 
   # TODO: variable type
   def visit_Input(self, instr:Input): 
-
+    i = 0
     for variable in instr.vlist:
-      sys.stdout.write(variable)
-      sys.stdout.write(":")
-      value = input()
+      if self.readDeArchivo != False:
+        with open(self.readDeArchivo, 'r') as f:
+          value = f.readline().split(',')[i]
+      else:
+        sys.stdout.write(variable)
+        sys.stdout.write(":")
+        value = input()
       try:
         value = Number(int(value))
       except ValueError:
         value = Number(float(value))
       self.assign(variable, value)
+
+      i += 1
       
   # TODO: %.8g for numeric data. etc
   def visit_Print(self, instr:Print):
@@ -367,7 +381,6 @@ class Interpreter(Visitor):
       if not pitem: continue
       if isinstance(pitem, Node):
         pitem = pitem.accept(self)
-        
       if pitem == ',':   self.pad(15)
       elif pitem == ';': self.pad(3)
       elif isinstance(pitem, str):
@@ -650,12 +663,39 @@ class Interpreter(Visitor):
   
   def visit_Expression(self, instr:Expression):
     func_type = instr.funcType
-    value = instr.exprList
-    value = int(value[0].value)
+    if func_type == 'LEFT$' or func_type == 'MID$' or func_type == 'RIGHT$' and self.corteDeCadena:
+      return instr.exprList[0].value
+
+    value = []
+    for values in instr.exprList:
+      value.append(values.value)
+    
+    for valor in value:
+      encontrada = 0
+      for var in self.vars.keys():
+        if var == valor:
+          encontrada = 1
+
+      if encontrada == 1:
+        NuevoValor = int(self.vars[valor])
+      elif '"' in valor:
+        NuevoValor = valor[1:]
+      else:
+        NuevoValor = int(valor) 
+
+      value[value.index(valor)] = NuevoValor       
+
 
     if func_type in self.functions:
-        result = self.functions[func_type](value)
+        if len(value) == 1:
+          result = self.functions[func_type](value[0])
+        elif len(value) == 2:
+          result = self.functions[func_type](value[0],value[1])
+        elif len(value) == 3:
+          result = self.functions[func_type](value[0],value[1],value[2])
     else:
         result = None  # O mostrar un mensaje de error, etc.
-
+    
     return result
+
+    

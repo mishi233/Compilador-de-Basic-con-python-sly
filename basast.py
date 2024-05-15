@@ -71,6 +71,8 @@ class Function(Expression):
     name = FnDimName
     funcType: String
     exprList : List[Expression]
+    def accept(self, visitor):
+        return visitor.visit_Expression(self)
 
 @dataclass
 class Variable(Expression):

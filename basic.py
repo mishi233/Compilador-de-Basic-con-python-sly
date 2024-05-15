@@ -1,3 +1,5 @@
+import random
+
 # basic.py
 '''
 usage: basic.py [-h] [-a style] [-o OUT] [-l] [-D] [-p] [-I] [--sym] [-S] [-R] input
@@ -26,11 +28,11 @@ optional arguments:
   -p, --print-stats: cuando el programa finaliza, imprimir estadisticas.
   -w, --write-stats: a la finalización, escriba las estadísticas a un archivo
   -o, --output-file: redirecciona el PRINT al nombre del archivo
+  -i, --input-file: redirecciona INPUT al nombre de archivo.
+  -r, --random: la semilla del generador de números aleatorios
+  -s, --slicing: Activa el corte de cadena (apaga los arreglos de cadena)
 
   -u, --uper-case: Convertir todas las entradas a mayúsculas
-  -s, --slicing: Activa el corte de cadena (apaga los arreglos de cadena)
-  -r, --random: la semilla del generador de números aleatorios
-  -i, --input-file: redirecciona INPUT al nombre de archivo.
 '''
 from contextlib import redirect_stdout
 from rich       import print
@@ -128,8 +130,26 @@ def parse_args():
       help=' redirecciona el PRINT al nombre del archivo'
   )
 
-
-
+  mutex.add_argument(
+      '-i', '--input-file',
+      action='store',
+      type=str,
+      dest='archivo_origen',
+      help='redirecciona INPUT al nombre de archivo'
+  )
+  mutex.add_argument(
+        '-r','--random',
+        action='store',
+        type=int,
+        dest='random_seed',
+        help='la semilla del generador de números aleatorios'
+    )
+  
+  mutex.add_argument(
+      '-s', '--slicing',
+      action='store_true',
+      help='Activa el corte de cadena (apaga los arreglos de cadena)'
+  )
   return cli.parse_args()
 
 
@@ -144,7 +164,10 @@ if __name__ == '__main__':
     'numeroEspacios': args.numero_espacios if args.numero_espacios else 0,
     'estadisticas': args.print_stats if args.print_stats else False,
     'escribir_estadisticas': args.write_stats if args.write_stats else False,
-    'escribir_print': args.output_file if args.output_file else False
+    'escribir_print': args.output_file if args.output_file else False,
+    'leer_archivo': args.archivo_origen if args.archivo_origen else False,
+    'semilla_random': args.random_seed if args.random_seed else random.random(),
+    'corteDeCadena': args.slicing if args.slicing else False
   }
 
   context = Context(config)
@@ -157,7 +180,6 @@ if __name__ == '__main__':
     source = file.read()
 
   if args.lex:
-    print("aahhhahahaha")
     flex = fname.split('.')[0] + '.lex'
     print(f'print lexer: {flex}')
     with open(flex, 'w', encoding='utf-8') as fout:
