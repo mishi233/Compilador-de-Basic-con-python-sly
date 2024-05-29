@@ -229,7 +229,7 @@ class Interpreter(Visitor):
 
         #print(instr, end="\n")
         #print(self.vars, end="\n\n")
-        #print(self.lists, end="\n\n")
+        #print("Listas: ",self.lists, end="\n\n")
 
         if self.segLinea:
           print(self.stat[self.pc][0])
@@ -287,7 +287,7 @@ class Interpreter(Visitor):
 
 
   # Assignment
-  def assign(self, target, value):
+  def assign(self, target, value, nonDim = 0):
     if isinstance(target, Array):
       var = target.var
       dim1 = target.dim1
@@ -309,10 +309,17 @@ class Interpreter(Visitor):
       x = int(dim1)
       if not var in self.lists:
         self.lists[var] = [0] * 10
-
-      if x > len(self.lists[var]):
-        self.error(f"DIMENSION TOO LARGE AT LINE {lineno}")
-      self.lists[var][x-self.indice] = value
+      if nonDim == 0:
+        if x > len(self.lists[var]):
+          self.error(f"DIMENSION TOO LARGE AT LINE {lineno}")
+        self.lists[var][x-self.indice] = value
+      else:
+        if '"' in value:
+          if not self.corteDeCadena:
+            for x in range(1, len(value)-1):
+              self.lists[var][x-self.indice-1] = value[x]
+          else:
+              self.error(f"EL CORTE DE CADENA ESTÁ DESACTIVADO")
     
     elif dim1 and dim2:
       x = dim1.accept(self)
@@ -338,9 +345,19 @@ class Interpreter(Visitor):
     var   = instr.var
     value = instr.expr
 
+    nonDim = 0
+
+    if isinstance(var, Array):
+      if var.dim1 == None:
+        if var.var in self.lists.keys():
+          dim1 = (len(self.lists[var.var]))
+          var.dim1 = str(dim1)
+          nonDim = 1
+
     if not isinstance(value, int):
       value = value.accept(self)
-    self.assign(var, value)
+
+    self.assign(var, value, nonDim)
 
   def visit_Read(self, instr:Read):
     for target in instr.exprList:
@@ -655,11 +672,19 @@ class Interpreter(Visitor):
     contenido = instr.value
     if isinstance(contenido, Array):
       if contenido.dim1:
-        direccion = int(self.vars[contenido.dim1])
-      return int(self.lists[contenido.var][direccion])
+        if contenido.dim1 in self.vars.keys():
+          return int(self.vars[contenido.dim1])
+        return int(self.lists[contenido.var][int(contenido.dim1)])
     if '"' in contenido:
       return contenido
-    return int(self.vars[contenido])
+    else:
+      contenido_variable = self.vars[contenido]
+      if isinstance(contenido_variable, int):
+        return contenido_variable
+      elif '"' in contenido_variable:
+        return contenido_variable
+      else:
+        return int(self.vars[contenido])
   
   def visit_Expression(self, instr:Expression):
     func_type = instr.funcType

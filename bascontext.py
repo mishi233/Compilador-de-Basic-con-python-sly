@@ -9,6 +9,7 @@ import time
 from baslex    import Lexer
 from basparse  import Parser
 from basinterp import Interpreter
+from basircode import CodeTranslator
 from basast    import *
 from basrender import DotRender
 from basrich import print_ast_tree
@@ -18,6 +19,7 @@ class Context:
     self.lexer  = Lexer()
     self.parser = Parser()
     self.interp = Interpreter(self, config)
+    self.translator = CodeTranslator(self)
     self.source = ''
     self.ast = DotRender()
     self.rich = print_ast_tree
@@ -82,4 +84,7 @@ class Context:
     else:
       print(self.rich(top))
 
-
+  def generate_code(self):
+    if not self.have_errors:
+      result =  self.translator.translate(self.ast)
+      return result

@@ -1,3 +1,6 @@
+0 LET X1 = "HOLA"
+1 LET x1 = "ADIOS"
+2 PRINT X1
 10 DIM X1(11)
 20 LET X1(0) = 0
 30 LET X1(1) = 1 

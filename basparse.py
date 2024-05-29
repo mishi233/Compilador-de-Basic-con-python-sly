@@ -39,6 +39,10 @@ class Parser(sly.Parser):
     @_("LET variable '=' expr")
     def command(self, p):
         return Let(p.variable, p.expr)
+    
+    @_("LET array '=' expr")
+    def command(self, p):
+        return Let(p.array, p.expr)
 
     @_("IDENT")
     def variable(self, p):
@@ -139,10 +143,14 @@ class Parser(sly.Parser):
     @_("IDENT")
     def arrayItem(self, p):
         return p.IDENT
-    
+
     @_("INTEGER")
     def arrayItem(self, p):
         return p.INTEGER
+    
+    @_("empty")
+    def arrayItem(self, p):
+        pass
 
     #-----------------------------------------
     @_("expr '+' expr",

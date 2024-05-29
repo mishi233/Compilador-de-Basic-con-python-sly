@@ -39,7 +39,6 @@ class Lexer(sly.Lexer):
         self.lineno += 1
         return t
 
-
     @_("LET|let")
     def LET(self, t): 
         t.value = t.value.upper()
@@ -142,7 +141,7 @@ class Lexer(sly.Lexer):
     
     FUNCTIONS = r'SIN|sin|COS|cos|TAN|tan|ATN|atn|EXP|exp|ABS|abs|LOG|log|SQR|sqr|RND|rnd|INT|int|TAB|tab|DEG|deg|PI|pi|TIME|time|LEN|len|(LEFT|left|MID|mid|RIGHT|right)\$'
 
-    IDENT = r'[A-Z][0-9]?\$?'
+    IDENT = r'([A-Z]|[a-z])[0-9]?\$?'
 
 
     LE = r'<='

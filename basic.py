@@ -31,7 +31,6 @@ optional arguments:
   -i, --input-file: redirecciona INPUT al nombre de archivo.
   -r, --random: la semilla del generador de números aleatorios
   -s, --slicing: Activa el corte de cadena (apaga los arreglos de cadena)
-
   -u, --uper-case: Convertir todas las entradas a mayúsculas
 '''
 from contextlib import redirect_stdout
@@ -80,6 +79,11 @@ def parse_args():
     action='store_true',
     help='Dump the symbol table')
   
+  mutex.add_argument(
+    '-u', '--uppercase',
+    action='store_true',
+    help='Convertir todas las entradas a mayúsculas')
+
   mutex.add_argument(
       '-A', '--array-base',
       action='store_true',
@@ -150,6 +154,12 @@ def parse_args():
       action='store_true',
       help='Activa el corte de cadena (apaga los arreglos de cadena)'
   )
+
+  mutex.add_argument(
+      '-T', '--translate',
+      action='store_true',
+      help='Genera código Intermedio'
+  )
   return cli.parse_args()
 
 
@@ -174,10 +184,11 @@ if __name__ == '__main__':
 
   if args.input: fname = args.input
   
-  
-
   with open(fname, encoding='utf-8') as file:
     source = file.read()
+
+  if args.uppercase:
+    source = source.upper()
 
   if args.lex:
     flex = fname.split('.')[0] + '.lex'
@@ -195,9 +206,12 @@ if __name__ == '__main__':
     with open(fast, 'w') as fout:
       with redirect_stdout(fout):
         context.print_ast(source, args)
-    
+  
+  elif args.translate:
+    context.parse(source)
+    context.generate_code()
+
   else:
-    
     context.parse(source)
     if not args.no_run:
       context.run()
