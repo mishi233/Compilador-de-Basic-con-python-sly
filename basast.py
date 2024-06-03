@@ -161,7 +161,9 @@ class End(Statement):
 
 @dataclass
 class DefFunction(Statement):
-    dim : List[FnDimName]
+    functionName : str
+    arguments: List[Expression]
+    expr: Expression
     def accept(self, visitor):
         return visitor.visit_DefFunction(self)
 

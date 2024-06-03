@@ -19,7 +19,7 @@ class Context:
     self.lexer  = Lexer()
     self.parser = Parser()
     self.interp = Interpreter(self, config)
-    self.translator = CodeTranslator(self)
+    self.translator = CodeTranslator()
     self.source = ''
     self.ast = DotRender()
     self.rich = print_ast_tree
@@ -86,5 +86,5 @@ class Context:
 
   def generate_code(self):
     if not self.have_errors:
-      result =  self.translator.translate(self.ast)
+      result =  self.translator.intermedium_code(self.ast)
       return result

@@ -1,0 +1,4 @@
+1 FOR I = 0 TO 10 STEP 2
+2   PRINT I
+3 NEXT I
+4 END

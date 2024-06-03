@@ -1,0 +1,7 @@
+1 LET A = 2 * 3 + 4 
+2 LET B = 2 + 3 * 4 
+3 IF A > B THEN 6
+4 PRINT A
+5 GOTO 7
+6 PRINT B
+7 END

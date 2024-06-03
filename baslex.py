@@ -134,15 +134,15 @@ class Lexer(sly.Lexer):
         t.value = t.value.upper()
         return t
 
-    @_(r'FN|fn')
+    @_("FN|fn")
     def FN(self, t):
         t.value = t.value.upper()
         return t
     
     FUNCTIONS = r'SIN|sin|COS|cos|TAN|tan|ATN|atn|EXP|exp|ABS|abs|LOG|log|SQR|sqr|RND|rnd|INT|int|TAB|tab|DEG|deg|PI|pi|TIME|time|LEN|len|(LEFT|left|MID|mid|RIGHT|right)\$'
 
+    FN_DIM_NAME = r'[a-zA-Z][a-zA-Z0-9]{2,}'
     IDENT = r'([A-Z]|[a-z])[0-9]?\$?'
-
 
     LE = r'<='
     GE = r'>='
@@ -150,10 +150,9 @@ class Lexer(sly.Lexer):
     LT = r'<'
     GT = r'>'
 
+    FLOAT   = r'\d+\.\d+'
     INTEGER = r'\d+'
-    FLOAT   = r'(?:\d+(?:\.\d*)?|\.\d+)'
     STRING  = r'"[^"]*"?'
-    FN_DIM_NAME = r'[a-zA-Z]+'
 
     def error(self, t):
         print(f"Línea [yello]{t.lineno}[/yello]: [red]caracter ilegal '{t.value[0]}'[/red]")

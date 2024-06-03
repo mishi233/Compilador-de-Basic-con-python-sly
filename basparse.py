@@ -148,6 +148,10 @@ class Parser(sly.Parser):
     def arrayItem(self, p):
         return p.INTEGER
     
+    @_("FLOAT")
+    def arrayItem(self, p):
+        return p.FLOAT
+    
     @_("empty")
     def arrayItem(self, p):
         pass
@@ -175,11 +179,15 @@ class Parser(sly.Parser):
     
     @_("variable")
     def expr(self, p):
-        return String(p.variable)
+        return Variable(p.variable)
 
     @_("FUNCTIONS '(' exprlist ')'")
     def expr(self, p):
         return Function(p.FUNCTIONS, p.exprlist) 
+    
+    @_("FN_DIM_NAME '(' exprlist ')'")
+    def expr(self, p):
+        return Function(p.FN_DIM_NAME, p.exprlist) 
     
     @_("'(' expr ')'")
     def expr(self, p):
